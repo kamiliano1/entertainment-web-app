@@ -4,7 +4,7 @@ import { extendTheme } from "@chakra-ui/react";
 import {} from "next/router";
 import "@fontsource/outfit/300.css";
 import "@fontsource/outfit/500.css";
-import { customIcons } from "./icons";
+// import { customIcons } from "./Input";
 // import "@fontsource/open-sans/300.css";
 // import "@fontsource/open-sans/400.css";
 // import "@fontsource/open-sans/700.css";
@@ -27,9 +27,6 @@ export const theme = extendTheme({
         bg: "darkBlue",
       },
     }),
-  },
-  icons: {
-    customIcons,
   },
   // components: {
   //   Button,

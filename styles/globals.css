@@ -105,3 +105,16 @@ a {
     color-scheme: dark;
   }
 }
+
+input {
+  caret-color: red;
+  caret-shape: block;
+}
+
+input {
+  border-color: red;
+  border: 30px solid red
+}
+textarea:focus, input:focus{
+  outline: yellow;
+}
