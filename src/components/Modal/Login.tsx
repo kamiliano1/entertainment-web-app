@@ -1,34 +1,123 @@
 import { background, Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
-import React, { Dispatch, MutableRefObject, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useContext } from "react";
 import { PageContext } from "@/src/Context";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "@/src/firebase/clientApp";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
 type LoginModalProps = { focusRef: MutableRefObject<null> };
 
 const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
-  const { setModalView } = useContext(PageContext);
+  type loginUserInputs = {
+    email: string;
+    password: string;
+  };
+
+  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginUserInputs>();
+  const [signInWithEmailAndPassword, user, loading, firebaseError] =
+    useSignInWithEmailAndPassword(auth);
+  const { setModalView, setIsOpen } = useContext(PageContext);
+
+  useEffect(() => {
+    if (user) setIsOpen!(false);
+  }, [user]);
+  const onSubmit: SubmitHandler<loginUserInputs> = (data) => {
+    setError("");
+    if (firebaseError) setError("Wrong email or password");
+
+    signInWithEmailAndPassword(data.email, data.password);
+  };
   return (
-    <Stack fontWeight={300}>
-      <Input ref={focusRef} placeholder="Email address"></Input>
-      <Input placeholder="Password"></Input>
-      <Button
-        background="red"
-        fontWeight={300}
-        _hover={{ color: "black", background: "white" }}
-      >
-        Login to your account
-      </Button>
-      <Flex>
-        <Text>Don't have an account? </Text>
-        <Text
-          ml={2}
-          color="red"
-          cursor="pointer"
-          _hover={{ color: "white" }}
-          onClick={() => setModalView!("register")}
-        >
-          Sign Up
+    <Stack>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Flex position="relative">
+          <Input
+            variant="flushed"
+            pl="1rem"
+            mb={3}
+            py="1rem"
+            cursor="pointer"
+            border="none"
+            focusBorderColor="#fff"
+            borderBottom="1px solid"
+            borderBottomColor={errors.email ? "red" : "greyishBlue.800"}
+            borderRadius={0}
+            placeholder="Email address"
+            type="email"
+            _placeholder={{ fontWeight: 300, fontSize: ".93rem" }}
+            {...register("email", { required: true })}
+          />
+          {errors.email?.type === "required" && (
+            <Text position="absolute" top=".5rem" right="1rem" color="red">
+              Can't be empty
+            </Text>
+          )}
+        </Flex>
+        <Flex position="relative">
+          <Input
+            variant="flushed"
+            pl="1rem"
+            mb={3}
+            py="1rem"
+            cursor="pointer"
+            border="none"
+            focusBorderColor="#fff"
+            borderBottom="1px solid"
+            borderBottomColor={errors.password ? "red" : "greyishBlue.800"}
+            borderRadius={0}
+            placeholder="Password"
+            type="password"
+            _placeholder={{ fontWeight: 300, fontSize: ".93rem" }}
+            {...register("password", { required: true })}
+          />
+          {errors.password?.type === "required" && (
+            <Text position="absolute" top=".5rem" right="1rem" color="red">
+              Can't be empty
+            </Text>
+          )}
+        </Flex>
+
+        <Text color="red" py={2}>
+          {error}
         </Text>
-      </Flex>
+        <Button
+          type="submit"
+          background="red"
+          isLoading={loading}
+          fontWeight={300}
+          width={"100%"}
+          py="1.5rem"
+          _hover={{ color: "black", backgroundColor: "white" }}
+        >
+          Login to your account
+        </Button>
+
+        <Flex justifyContent="center" p="1.5rem 0 2rem 0">
+          <Text>Don't have an account? </Text>
+          <Text
+            onClick={() => setModalView!("register")}
+            ml={2}
+            color="red"
+            cursor="pointer"
+            _hover={{ color: "white" }}
+          >
+            Sign Up
+          </Text>
+        </Flex>
+      </form>
     </Stack>
   );
 };

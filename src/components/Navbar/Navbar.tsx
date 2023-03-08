@@ -10,10 +10,18 @@ import { MdLocalMovies, MdMovie } from "react-icons/md";
 import { SiWindows11 } from "react-icons/si";
 import { PageContext } from "@/src/Context";
 import LoginModal from "../Modal/Modal";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/src/firebase/clientApp";
+import { signOut } from "firebase/auth";
+
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
   const { isOpen, setIsOpen } = useContext(PageContext);
-
+  const [user, loading, error] = useAuthState(auth);
+  const logout = async () => {
+    await signOut(auth);
+    console.log(user);
+  };
   return (
     <Flex
       backgroundColor="semiDarkBlue"
@@ -27,13 +35,17 @@ const Navbar: React.FC<NavbarProps> = () => {
       height={{ lg: "90vh" }}
     >
       <LoginModal />
-      <Button
-        onClick={() => {
-          setIsOpen!((prev) => !prev);
-        }}
-      >
-        CLICKAJ
-      </Button>
+      {!user ? (
+        <Button
+          onClick={() => {
+            setIsOpen!((prev) => !prev);
+          }}
+        >
+          LogIn
+        </Button>
+      ) : (
+        <Button onClick={logout}>LogOut</Button>
+      )}
       <Icon as={MdMovie} color="red" fontSize={{ base: "25px", md: "32px" }} />
       <Stack
         alignItems="center"

@@ -12,10 +12,22 @@ import "@fontsource/outfit/500.css";
 // 2. Call `extendTheme` and pass your custom values
 export const theme = extendTheme({
   colors: {
-    darkBlue: "hsl(223 30% 9%)",
+    darkBlue: {
+      1000: "hsla(223, 30%, 9%, 1)",
+      800: "hsla(223, 30%, 9%, .8)",
+      600: "hsla(223, 30%, 9%, .6)",
+    },
+    greyishBlue: {
+      1000: "hsla(223, 23%, 46%, 1)",
+      800: "hsla(223, 23%, 46%, .8)",
+      600: "hsla(223, 23%, 46%, .6)",
+    },
+    semiDarkBlue: {
+      1000: "hsla(223, 36%, 14%, 1)",
+      800: "hsla(223, 36%, 14%, .8)",
+      600: "hsla(223, 36%, 14%, .6)",
+    },
     red: "hsl(0 97% 63%)",
-    greyishBlue: "hsl(223 23% 46%)",
-    semiDarkBlue: "hsl(223 36% 14%)",
     white: "hsl(0 0% 100%)",
   },
   fonts: {
@@ -24,7 +36,8 @@ export const theme = extendTheme({
   styles: {
     global: () => ({
       body: {
-        bg: "darkBlue",
+        bg: "darkBlue.1000",
+        fontWeight: 300,
       },
     }),
   },
