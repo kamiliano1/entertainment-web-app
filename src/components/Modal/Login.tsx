@@ -1,18 +1,14 @@
-import { background, Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
+import { PageContext } from "@/src/Context";
+import { auth } from "@/src/firebase/clientApp";
+import { Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
 import React, {
-  Dispatch,
   MutableRefObject,
-  SetStateAction,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { useContext } from "react";
-import { PageContext } from "@/src/Context";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/src/firebase/clientApp";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
 type LoginModalProps = { focusRef: MutableRefObject<null> };
 
 const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {

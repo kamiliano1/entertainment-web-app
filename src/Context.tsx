@@ -7,16 +7,21 @@ import {
   SetStateAction,
 } from "react";
 
+type ModalViewType = "login" | "register";
+
 type PageContextType = {
   isOpen: boolean;
-  view: "login" | "register";
+  view: ModalViewType;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
-  setModalView?: Dispatch<SetStateAction<"login" | "register">>;
+  setModalView?: Dispatch<SetStateAction<ModalViewType>>;
+  searchBarValue: string;
+  searchBarValueState?: Dispatch<SetStateAction<string>>;
 };
 
 const defaultState: PageContextType = {
   isOpen: false,
   view: "login",
+  searchBarValue: "",
 };
 
 interface Props {
@@ -26,7 +31,8 @@ const PageContext = createContext<PageContextType>(defaultState);
 
 const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [modalView, setModalView] = useState<PageContextType["view"]>("login");
+  const [modalView, setModalView] = useState<ModalViewType>("login");
+  const [searchBar, setSearchBar] = useState("");
   return (
     <PageContext.Provider
       value={{
@@ -34,6 +40,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setIsOpen: setIsOpen,
         view: modalView,
         setModalView: setModalView,
+        searchBarValue: searchBar,
+        searchBarValueState: setSearchBar,
       }}
     >
       {children}
