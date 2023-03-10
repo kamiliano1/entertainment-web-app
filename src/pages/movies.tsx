@@ -47,7 +47,7 @@ export default function Home() {
         <Flex flexWrap="nowrap" overflowX="auto">
           {trendings}
         </Flex>
-        <Flex flexWrap="wrap">{recommended}</Flex>
+        <Flex>{recommended}</Flex>
       </Stack>
     </Box>
   );

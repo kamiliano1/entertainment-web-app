@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Stack, Image } from "@chakra-ui/react";
+import { Button, Flex, Icon, Stack, Image, Link } from "@chakra-ui/react";
 // import Image from "next/image";
 import React, { useState } from "react";
 import { useContext } from "react";
@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   const logout = async () => {
     await signOut(auth);
   };
+  const [currentTab, setCurrentTab] = useState<string>("home");
   return (
     <>
       <Flex
@@ -58,30 +59,50 @@ const Navbar: React.FC<NavbarProps> = () => {
           mt={{ lg: "2rem" }}
           mb={{ lg: "auto" }}
         >
-          <Icon
-            as={SiWindows11}
-            color="greyishBlue.1000"
-            fontSize={{ base: "16px", md: "20px" }}
-            _hover={{ color: "red" }}
-          />
-          <Icon
-            as={MdLocalMovies}
-            color="greyishBlue.1000"
-            fontSize={{ base: "24px", md: "28px" }}
-            _hover={{ color: "red" }}
-          />
-          <Icon
-            as={GiTv}
-            color="greyishBlue.1000"
-            fontSize={{ base: "20px", md: "25px" }}
-            _hover={{ color: "red" }}
-          />
-          <Icon
-            as={BsFillBookmarkFill}
-            color="greyishBlue.1000"
-            fontSize={{ base: "18px", md: "20px" }}
-            _hover={{ color: "red" }}
-          />
+          <Link href="/">
+            <Icon
+              as={SiWindows11}
+              color={`${currentTab === "home" ? "red" : "greyishBlue.1000"}`}
+              fontSize={{ base: "16px", md: "20px" }}
+              _hover={{ color: "red" }}
+              name="home"
+              onClick={() => setCurrentTab("home")}
+            />
+          </Link>
+          <Link href="/movies">
+            <Icon
+              as={MdLocalMovies}
+              color={`${currentTab === "movies" ? "red" : "greyishBlue.1000"}`}
+              fontSize={{ base: "24px", md: "28px" }}
+              _hover={{ color: "red" }}
+              name="movies"
+              onClick={() => setCurrentTab("movies")}
+            />
+          </Link>
+          <Link href="/tvSeries">
+            <Icon
+              as={GiTv}
+              color={`${
+                currentTab === "tvSeries" ? "red" : "greyishBlue.1000"
+              }`}
+              fontSize={{ base: "20px", md: "25px" }}
+              _hover={{ color: "red" }}
+              name="tvSeries"
+              onClick={() => setCurrentTab("tvSeries")}
+            />
+          </Link>
+          <Link href="/bookmarked">
+            <Icon
+              as={BsFillBookmarkFill}
+              color={`${
+                currentTab === "bookmarked" ? "red" : "greyishBlue.1000"
+              }`}
+              fontSize={{ base: "18px", md: "20px" }}
+              _hover={{ color: "red" }}
+              name="bookmarked"
+              onClick={() => setCurrentTab("bookmarked")}
+            />
+          </Link>
         </Stack>
         <Image
           src={"assets/image-avatar.png"}
@@ -93,7 +114,6 @@ const Navbar: React.FC<NavbarProps> = () => {
           // height="24"
         />
       </Flex>
-      <InputElement />
     </>
   );
 };

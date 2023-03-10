@@ -5,21 +5,12 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";
 import { MdLocalMovies } from "react-icons/md";
 import { AiFillPlayCircle } from "react-icons/ai";
-import { TrendingItemInterface } from "./TrendingItemInterface";
-// interface TrendingItemProps {
-//   title: string;
-//   thumnailSmall: string;
-//   thumnailLarge: string;
-//   year: number;
-//   category: string;
-//   rating: string;
-//   isBookMarked: boolean;
-//   isHovered: boolean;
-// }
+import { MovieItemInterface } from "./MovieItemInterface";
 
-const TrendingItem: React.FC<TrendingItemInterface> = ({
+const MovieItem: React.FC<MovieItemInterface> = ({
   title,
   thumnailSmall,
+  thumnailMedium,
   thumnailLarge,
   year,
   category,
@@ -49,22 +40,17 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
       color="white"
       borderRadius="8px"
       backgroundSize="cover"
-      //   backgroundColor="greyishBlue.1000"
       backgroundColor="rgba(255, 0, 0, 0.5)"
-      //   opacity={isHover ? ".6" : "1"}
-      width={{ base: "240px", md: "470px" }}
-      height={{ base: "140px", md: "230px" }}
-      //   backgroundImage={{ base: `${thumnailSmall}`, md: thumnailLarge }}
+      width={{ base: "164px", md: "220px", lg: "280px" }}
+      height={{ base: "110px", md: "140px", lg: "174px" }}
       backgroundImage={{
         base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
-        md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
+        md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailMedium})`,
+        lg: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
       }}
     >
       {isHover && (
         <Flex
-          //   backgrou
-
-          //
           alignItems="center"
           position="absolute"
           w="calc(100% - 2rem)"
@@ -74,7 +60,6 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
         >
           <Flex
             cursor="pointer"
-            // opacity={0.25}
             background="rgba(255, 255, 255, .25)"
             py="9px"
             px="1rem"
@@ -172,4 +157,4 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
     </Flex>
   );
 };
-export default TrendingItem;
+export default MovieItem;
