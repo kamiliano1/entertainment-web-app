@@ -6,18 +6,8 @@ import { GiTv } from "react-icons/gi";
 import { MdLocalMovies } from "react-icons/md";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { TrendingItemInterface } from "./TrendingItemInterface";
-// interface TrendingItemProps {
-//   title: string;
-//   thumnailSmall: string;
-//   thumnailLarge: string;
-//   year: number;
-//   category: string;
-//   rating: string;
-//   isBookMarked: boolean;
-//   isHovered: boolean;
-// }
-
-const TrendingItem: React.FC<TrendingItemInterface> = ({
+import { MoviesInterface } from "../MoviesInterface/MoviesInterface";
+const TrendingItem: React.FC<MoviesInterface> = ({
   title,
   thumnailSmall,
   thumnailLarge,
@@ -27,9 +17,10 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
   isBookMarked,
   isHovered,
 }) => {
-  const { setBookMarkList, setTrendingList } = useContext(PageContext);
+  const { setBookMarkList, setTrendingList, setMovieList } =
+    useContext(PageContext);
   const toggleBookmark = (title: string) => {
-    setTrendingList!((prev) =>
+    setMovieList!((prev) =>
       prev.map((item) =>
         title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
       )
@@ -44,17 +35,13 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
       onMouseLeave={() => setIsHover(false)}
       flex="0 0 auto"
       position="relative"
-      mx="1rem"
       p="1rem"
       color="white"
       borderRadius="8px"
       backgroundSize="cover"
-      //   backgroundColor="greyishBlue.1000"
       backgroundColor="rgba(255, 0, 0, 0.5)"
-      //   opacity={isHover ? ".6" : "1"}
       width={{ base: "240px", md: "470px" }}
       height={{ base: "140px", md: "230px" }}
-      //   backgroundImage={{ base: `${thumnailSmall}`, md: thumnailLarge }}
       backgroundImage={{
         base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
         md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
@@ -62,9 +49,6 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
     >
       {isHover && (
         <Flex
-          //   backgrou
-
-          //
           alignItems="center"
           position="absolute"
           w="calc(100% - 2rem)"
@@ -74,7 +58,6 @@ const TrendingItem: React.FC<TrendingItemInterface> = ({
         >
           <Flex
             cursor="pointer"
-            // opacity={0.25}
             background="rgba(255, 255, 255, .25)"
             py="9px"
             px="1rem"

@@ -28,7 +28,7 @@ const InputElement: React.FC<InputElementProps> = () => {
     searchBarValueState!(e.target.value);
   };
   return (
-    <Stack spacing={4} alignItems="center" maxWidth="1400px">
+    <Stack spacing={4} alignItems="center" maxWidth="1400px" px="1rem">
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"

@@ -35,3 +35,25 @@ export interface TrendingItemInterface {
 //       "isBookmarked": false,
 //       "isTrending": true
 //     },
+export interface MoviesInterface {
+  title: string;
+  thumnailSmall: string;
+  thumnailLarge: string;
+  thumbnail: {
+    trending?: {
+      small: string;
+      large: string;
+    };
+    regular: {
+      small: string;
+      medium: string;
+      large: string;
+    };
+  };
+  year: number;
+  category: string;
+  rating: string;
+  isBookMarked: boolean;
+  isTrending: true;
+  isHovered?: boolean;
+}

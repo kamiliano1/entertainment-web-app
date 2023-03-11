@@ -14,7 +14,7 @@ export interface MovieItemInterface {
   category: string;
   rating: string;
   isBookMarked: boolean;
-  isTrending: false;
+  isTrending: boolean;
   isHovered?: boolean;
 }
 // [

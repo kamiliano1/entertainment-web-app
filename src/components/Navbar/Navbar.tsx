@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Stack, Image, Link } from "@chakra-ui/react";
+import { Button, Flex, Icon, Stack, Image } from "@chakra-ui/react";
 // import Image from "next/image";
 import React, { useState } from "react";
 import { useContext } from "react";
@@ -13,7 +13,7 @@ import LoginModal from "../Modal/Modal";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/src/firebase/clientApp";
 import { signOut } from "firebase/auth";
-
+import Link from "next/link";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
   const { isOpen, setIsOpen } = useContext(PageContext);

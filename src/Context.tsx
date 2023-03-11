@@ -8,6 +8,7 @@ import {
 } from "react";
 import { TrendingItemInterface } from "./components/Trending/TrendingItemInterface";
 import { MovieItemInterface } from "./components/Movie/MovieItemInterface";
+import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
 type ModalViewType = "login" | "register";
 
 type PageContextType = {
@@ -17,12 +18,18 @@ type PageContextType = {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   setModalView?: Dispatch<SetStateAction<ModalViewType>>;
   searchBarValueState?: Dispatch<SetStateAction<string>>;
-  trendingList?: TrendingItemInterface[];
-  setTrendingList?: Dispatch<SetStateAction<TrendingItemInterface[]>>;
-  bookMarkList?: TrendingItemInterface[];
-  setBookMarkList?: Dispatch<SetStateAction<TrendingItemInterface[]>>;
-  recommendedList?: MovieItemInterface[];
-  setRecommendedList?: Dispatch<SetStateAction<MovieItemInterface[]>>;
+
+  trendingList?: MoviesInterface[];
+  setTrendingList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+
+  bookMarkList?: MoviesInterface[];
+  setBookMarkList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+  recommendedList?: MoviesInterface[];
+  setRecommendedList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+
+  movieList?: MoviesInterface[];
+  setMovieList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+  // toggleBookmark?: (title: string) => void;
 };
 
 const defaultState: PageContextType = {
@@ -40,15 +47,17 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalView, setModalView] = useState<ModalViewType>("login");
   const [searchBar, setSearchBar] = useState("");
-  const [trendingList, setTrendingList] = useState<TrendingItemInterface[]>([]);
-  const [recommendedList, setRecommendedList] = useState<MovieItemInterface[]>(
-    []
-  );
-  const [bookMarkList, setBookMarkList] = useState<TrendingItemInterface[]>([]);
+  const [trendingList, setTrendingList] = useState<MoviesInterface[]>([]);
+  const [recommendedList, setRecommendedList] = useState<MoviesInterface[]>([]);
+  const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
+  const [bookMarkList, setBookMarkList] = useState<MoviesInterface[]>([]);
+  console.log(bookMarkList);
+
   useEffect(() => {
     fetch("data/data.json")
       .then((res) => res.json())
       .then((data) => {
+        setMovieList(data);
         setTrendingList(
           data.filter((item: TrendingItemInterface) => item.isTrending === true)
         );
@@ -58,7 +67,17 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
       });
   }, []);
 
-  useEffect(() => {}, [trendingList]);
+  useEffect(() => {
+    setBookMarkList;
+  }, [trendingList, recommendedList]);
+
+  // const toggleBookmark = (title: string) => {
+  //   setTrendingList!((prev) =>
+  //     prev.map((item) =>
+  //       title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
+  //     )
+  //   );
+  // };
   return (
     <PageContext.Provider
       value={{
@@ -73,6 +92,10 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         bookMarkList,
         setBookMarkList,
         recommendedList,
+        setRecommendedList,
+        movieList,
+        setMovieList,
+        // toggleBookmark,
       }}
     >
       {children}
