@@ -85,7 +85,7 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "24px" }}
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
           >
             {year}
           </Text>
@@ -102,7 +102,7 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "24px" }}
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
           >
             {" "}
             {category}
@@ -119,7 +119,7 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "24px" }}
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
           >
             {" "}
             {rating}

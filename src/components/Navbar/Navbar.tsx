@@ -16,12 +16,13 @@ import { signOut } from "firebase/auth";
 import Link from "next/link";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
-  const { isOpen, setIsOpen } = useContext(PageContext);
+  const { isOpen, setIsOpen, currentTab, setCurrentTab } =
+    useContext(PageContext);
   const [user, loading, error] = useAuthState(auth);
   const logout = async () => {
     await signOut(auth);
   };
-  const [currentTab, setCurrentTab] = useState<string>("home");
+  // const [currentTab, setCurrentTab] = useState<string>("home");
   return (
     <>
       <Flex
@@ -66,7 +67,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               fontSize={{ base: "16px", md: "20px" }}
               _hover={{ color: "red" }}
               name="home"
-              onClick={() => setCurrentTab("home")}
+              onClick={() => {
+                if (setCurrentTab) setCurrentTab("home");
+              }}
             />
           </Link>
           <Link href="/movies">
@@ -76,7 +79,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               fontSize={{ base: "24px", md: "28px" }}
               _hover={{ color: "red" }}
               name="movies"
-              onClick={() => setCurrentTab("movies")}
+              onClick={() => {
+                if (setCurrentTab) setCurrentTab("movies");
+              }}
             />
           </Link>
           <Link href="/tvSeries">
@@ -88,7 +93,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               fontSize={{ base: "20px", md: "25px" }}
               _hover={{ color: "red" }}
               name="tvSeries"
-              onClick={() => setCurrentTab("tvSeries")}
+              onClick={() => {
+                if (setCurrentTab) setCurrentTab("tvSeries");
+              }}
             />
           </Link>
           <Link href="/bookmarked">
@@ -100,7 +107,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               fontSize={{ base: "18px", md: "20px" }}
               _hover={{ color: "red" }}
               name="bookmarked"
-              onClick={() => setCurrentTab("bookmarked")}
+              onClick={() => {
+                if (setCurrentTab) setCurrentTab("bookmarked");
+              }}
             />
           </Link>
         </Stack>

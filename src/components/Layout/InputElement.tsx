@@ -10,9 +10,13 @@ import {
 import { FiSearch } from "react-icons/fi";
 import { PageContext } from "@/src/Context";
 import { SubmitHandler, useForm } from "react-hook-form";
-type InputElementProps = {};
-const InputElement: React.FC<InputElementProps> = () => {
+type InputElementProps = {
+  placeholder: string;
+};
+const InputElement: React.FC<InputElementProps> = ({ placeholder }) => {
   const { searchBarValue, searchBarValueState } = useContext(PageContext);
+  // const { searchBarValue, searchBarValueState } = useContext(PageContext);
+  // const [searchBarValue, searchBarValueState] = useState("");
   // const {
   //   register,
   //   onChange,
@@ -43,7 +47,7 @@ const InputElement: React.FC<InputElementProps> = () => {
           fontSize="1rem"
           color="white"
           fontWeight={300}
-          placeholder="Search for movies or TV series"
+          placeholder={placeholder}
           _placeholder={{ color: "white", opacity: 0.5, fontWeight: 300 }}
           _focus={{
             borderBottom: "hsl(0 0% 100% /.3) 1px solid",

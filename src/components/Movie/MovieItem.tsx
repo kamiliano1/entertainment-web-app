@@ -41,12 +41,17 @@ const MovieItem: React.FC<MoviesInterface> = ({
   const icon = category === "Movie" ? MdLocalMovies : GiTv;
   return (
     <Flex
-      direction={"column"}
+      maxWidth={{ base: "164px", md: "220px", lg: "280px" }}
+      display="inline-flex"
+      direction="column"
       textColor="white"
       flexGrow={1}
+      // flexShrink={5}
+      // flex="1 1 auto"
       flexBasis={{ base: "154px", md: "220px", lg: "280px" }}
     >
       <Flex
+        justifyContent="start"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         flex="0 0 auto"
@@ -56,7 +61,6 @@ const MovieItem: React.FC<MoviesInterface> = ({
         borderRadius="8px"
         backgroundSize="cover"
         backgroundColor="rgba(255, 0, 0, 0.5)"
-        // maxWidth={{ base: "164px", md: "220px", lg: "280px" }}
         height={{ base: "110px", md: "140px", lg: "174px" }}
         backgroundImage={{
           base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,

@@ -10,11 +10,13 @@ import { TrendingItemInterface } from "./components/Trending/TrendingItemInterfa
 import { MovieItemInterface } from "./components/Movie/MovieItemInterface";
 import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
 type ModalViewType = "login" | "register";
-
+type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
 type PageContextType = {
   isOpen: boolean;
   view: ModalViewType;
   searchBarValue: string;
+  currentTab?: PageNameType;
+  setCurrentTab?: Dispatch<SetStateAction<PageNameType>>;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   setModalView?: Dispatch<SetStateAction<ModalViewType>>;
   searchBarValueState?: Dispatch<SetStateAction<string>>;
@@ -47,6 +49,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalView, setModalView] = useState<ModalViewType>("login");
   const [searchBar, setSearchBar] = useState("");
+  const [currentTab, setCurrentTab] = useState<PageNameType>("home");
   const [trendingList, setTrendingList] = useState<MoviesInterface[]>([]);
   const [recommendedList, setRecommendedList] = useState<MoviesInterface[]>([]);
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
@@ -70,6 +73,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     setBookMarkList;
   }, [trendingList, recommendedList]);
+
+  console.log(currentTab);
 
   // const toggleBookmark = (title: string) => {
   //   setTrendingList!((prev) =>
@@ -95,6 +100,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setRecommendedList,
         movieList,
         setMovieList,
+        setCurrentTab,
+        currentTab,
         // toggleBookmark,
       }}
     >
