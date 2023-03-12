@@ -1,37 +1,31 @@
 import {
-  useState,
-  useEffect,
   createContext,
-  ReactNode,
   Dispatch,
   SetStateAction,
+  useEffect,
+  useState,
 } from "react";
-import { TrendingItemInterface } from "./components/Trending/TrendingItemInterface";
-import { MovieItemInterface } from "./components/Movie/MovieItemInterface";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
+import { auth } from "./firebase/clientApp";
 type ModalViewType = "login" | "register";
 type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
 type PageContextType = {
   isOpen: boolean;
-  view: ModalViewType;
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+  view?: ModalViewType;
+  setModalView?: Dispatch<SetStateAction<ModalViewType>>;
+  openLoginModal?: () => void;
+
   searchBarValue: string;
+
   currentTab?: PageNameType;
   setCurrentTab?: Dispatch<SetStateAction<PageNameType>>;
-  setIsOpen?: Dispatch<SetStateAction<boolean>>;
-  setModalView?: Dispatch<SetStateAction<ModalViewType>>;
-  searchBarValueState?: Dispatch<SetStateAction<string>>;
 
-  trendingList?: MoviesInterface[];
-  setTrendingList?: Dispatch<SetStateAction<MoviesInterface[]>>;
-
-  bookMarkList?: MoviesInterface[];
-  setBookMarkList?: Dispatch<SetStateAction<MoviesInterface[]>>;
-  recommendedList?: MoviesInterface[];
-  setRecommendedList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+  setSearchBarValue?: Dispatch<SetStateAction<string>>;
 
   movieList?: MoviesInterface[];
   setMovieList?: Dispatch<SetStateAction<MoviesInterface[]>>;
-  // toggleBookmark?: (title: string) => void;
 };
 
 const defaultState: PageContextType = {
@@ -48,41 +42,44 @@ const PageContext = createContext<PageContextType>(defaultState);
 const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalView, setModalView] = useState<ModalViewType>("login");
-  const [searchBar, setSearchBar] = useState("");
-  const [currentTab, setCurrentTab] = useState<PageNameType>("home");
-  const [trendingList, setTrendingList] = useState<MoviesInterface[]>([]);
-  const [recommendedList, setRecommendedList] = useState<MoviesInterface[]>([]);
-  const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
-  const [bookMarkList, setBookMarkList] = useState<MoviesInterface[]>([]);
-  console.log(bookMarkList);
 
+  const [currentTab, setCurrentTab] = useState<PageNameType>("home");
+
+  const [searchBarValue, setSearchBarValue] = useState("");
+
+  const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
+
+  const [user, loading, error] = useAuthState(auth);
+  const openLoginModal = () => {
+    if (!user) {
+      setIsOpen(true);
+      setModalView("login");
+    }
+  };
   useEffect(() => {
+    // console.log("local", localStorage.getItem("bookmark"));
+    // if (localStorage.getItem("bookmark")?.length)
+
+    if (localStorage.getItem("bookmark")) {
+      console.log(JSON.parse(localStorage.getItem("bookmark") as string));
+      setMovieList(JSON.parse(localStorage.getItem("bookmark") as string));
+      return;
+    }
     fetch("data/data.json")
       .then((res) => res.json())
-      .then((data) => {
-        setMovieList(data);
-        setTrendingList(
-          data.filter((item: TrendingItemInterface) => item.isTrending === true)
-        );
-        setRecommendedList(
-          data.filter((item: MovieItemInterface) => item.isTrending === false)
-        );
-      });
+      .then((data) => setMovieList(data));
   }, []);
-
+  // localStorage.getItem("bookmark");
   useEffect(() => {
-    setBookMarkList;
-  }, [trendingList, recommendedList]);
+    // console.log(movieList);
 
-  console.log(currentTab);
+    if (movieList.length)
+      localStorage.setItem("bookmark", JSON.stringify(movieList));
+    // localStorage.setItem("bookmarkk", JSON.stringify(bookMarkList));
+    // localStorage.setItem("bookmarkkk", JSON.stringify(false));
+    // console.log(bookMarkList);
+  }, [movieList]);
 
-  // const toggleBookmark = (title: string) => {
-  //   setTrendingList!((prev) =>
-  //     prev.map((item) =>
-  //       title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
-  //     )
-  //   );
-  // };
   return (
     <PageContext.Provider
       value={{
@@ -90,19 +87,13 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setIsOpen,
         view: modalView,
         setModalView,
-        searchBarValue: searchBar,
-        searchBarValueState: setSearchBar,
-        trendingList,
-        setTrendingList,
-        bookMarkList,
-        setBookMarkList,
-        recommendedList,
-        setRecommendedList,
+        openLoginModal,
+        searchBarValue,
+        setSearchBarValue,
         movieList,
         setMovieList,
         setCurrentTab,
         currentTab,
-        // toggleBookmark,
       }}
     >
       {children}

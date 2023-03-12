@@ -7,13 +7,7 @@ import Navbar from "../components/Navbar/Navbar";
 import TrendingItem from "../components/Trending/TrendingItem";
 import { PageContext } from "../Context";
 export default function Home() {
-  const {
-    trendingList,
-    setTrendingList,
-    recommendedList,
-    movieList,
-    searchBarValue,
-  } = useContext(PageContext);
+  const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
   useEffect(() => {
     if (movieList)
@@ -41,7 +35,7 @@ export default function Home() {
     />
   ));
 
-  const recommended = movieList!
+  const recommendedItems = movieList!
     .filter((movies) => movies.isTrending === false)
     .map((item) => (
       <MovieItem
@@ -57,14 +51,13 @@ export default function Home() {
         isTrending={item.isTrending}
       />
     ));
-  const trendings = movieList!
+  const trendingsItems = movieList!
     .filter((movies) => movies.isTrending)
     .map((item) => (
       <TrendingItem
         thumbnail={item.thumbnail}
-        thumnailSmall={item.thumbnail.regular.small}
-        thumnailMedium={item.thumbnail.regular.medium}
-        thumnailLarge={item.thumbnail.regular.large}
+        thumnailSmall={item.thumbnail.trending!.small}
+        thumnailLarge={item.thumbnail.trending!.large}
         title={item.title}
         year={item.year}
         category={item.category}
@@ -110,7 +103,7 @@ export default function Home() {
               overflowX="scroll"
               gap={{ base: "16px", md: "40px" }}
             >
-              {trendings}
+              {trendingsItems}
             </Flex>
 
             <Text
@@ -139,7 +132,7 @@ export default function Home() {
           // alignContent="center"
           maxWidth="3000px"
         >
-          {searchBarValue ? searchItems : recommended}
+          {searchBarValue ? searchItems : recommendedItems}
         </Flex>
       </Stack>
     </Box>

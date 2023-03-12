@@ -6,13 +6,7 @@ import { MoviesInterface } from "../components/MoviesInterface/MoviesInterface";
 import Navbar from "../components/Navbar/Navbar";
 import { PageContext } from "../Context";
 export default function Home() {
-  const {
-    trendingList,
-    setTrendingList,
-    recommendedList,
-    movieList,
-    searchBarValue,
-  } = useContext(PageContext);
+  const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
   useEffect(() => {
     if (movieList)
@@ -173,7 +167,7 @@ export default function Home() {
                 <Text
                   pt={{ base: "24px", md: "33px", lg: "34px" }}
                   pb={{ base: "16px", md: "25px" }}
-                  as="h2"
+                  as="p"
                   textColor="white"
                   fontSize={{ base: "20px", md: "32px" }}
                   lineHeight={{ base: "25.2px", md: "40.32px" }}

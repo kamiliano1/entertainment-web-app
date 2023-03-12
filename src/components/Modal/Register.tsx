@@ -34,8 +34,12 @@ const Register: React.FC<RegisterProps> = () => {
   const [error, setError] = useState("");
   const { setModalView, setIsOpen } = useContext(PageContext);
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
-    console.log(data);
+    console.log(firebaseError);
     if (firebaseError) setError("A user with that email already exists");
+    if (data.password.length < 6) {
+      setError("Pasword must contain at least 6 characters");
+      return;
+    }
     if (data.password !== data.repeatPassword) {
       setError("Password do not match");
       return;

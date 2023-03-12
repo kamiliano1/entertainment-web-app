@@ -8,6 +8,8 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import { MovieItemInterface } from "./MovieItemInterface";
 // import { MoviesInterface } from "../Trending/TrendingItemInterface";
 import { MoviesInterface } from "../MoviesInterface/MoviesInterface";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/src/firebase/clientApp";
 const MovieItem: React.FC<MoviesInterface> = ({
   title,
   thumnailSmall,
@@ -19,22 +21,14 @@ const MovieItem: React.FC<MoviesInterface> = ({
   isBookMarked,
   isHovered,
 }) => {
-  const { setBookMarkList, setRecommendedList, movieList, setMovieList } =
-    useContext(PageContext);
-  // const toggleBookmark = (title: string) => {
-  //   setRecommendedList!((prev) =>
-  //     prev.map((item) =>
-  //       title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
-  //     )
-  //   );
-  // };
+  const { setMovieList, openLoginModal } = useContext(PageContext);
   const toggleBookmark = (title: string) => {
     setMovieList!((prev) =>
       prev.map((item) =>
         title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
       )
     );
-    setBookMarkList!(movieList!.filter((item) => item.isBookMarked));
+    // setBookMarkList!(movieList!.filter((item) => item.isBookMarked));
   };
   const [isHover, setIsHover] = useState<boolean>(false);
   const backgroundOpacity = isHover ? "0.5" : "0";
@@ -46,21 +40,19 @@ const MovieItem: React.FC<MoviesInterface> = ({
       direction="column"
       textColor="white"
       flexGrow={1}
-      // flexShrink={5}
-      // flex="1 1 auto"
       flexBasis={{ base: "154px", md: "220px", lg: "280px" }}
     >
       <Flex
-        justifyContent="start"
+        // justifyContent="start"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         flex="0 0 auto"
         position="relative"
-        p="1rem"
-        color="white"
-        borderRadius="8px"
+        // p="1rem"
+        // color="white"
+        // borderRadius="8px"
         backgroundSize="cover"
-        backgroundColor="rgba(255, 0, 0, 0.5)"
+        // backgroundColor="rgba(255, 0, 0, 0.5)"
         height={{ base: "110px", md: "140px", lg: "174px" }}
         backgroundImage={{
           base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
@@ -85,6 +77,7 @@ const MovieItem: React.FC<MoviesInterface> = ({
               borderRadius="28.5px"
               alignItems="center"
               zIndex={30}
+              onClick={openLoginModal}
             >
               <Icon fontSize="22px" as={AiFillPlayCircle}></Icon>
               <Text fontSize="15px" px="1rem" fontWeight={500}>

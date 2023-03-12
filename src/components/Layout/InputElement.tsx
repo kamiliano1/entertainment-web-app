@@ -14,22 +14,10 @@ type InputElementProps = {
   placeholder: string;
 };
 const InputElement: React.FC<InputElementProps> = ({ placeholder }) => {
-  const { searchBarValue, searchBarValueState } = useContext(PageContext);
-  // const { searchBarValue, searchBarValueState } = useContext(PageContext);
-  // const [searchBarValue, searchBarValueState] = useState("");
-  // const {
-  //   register,
-  //   onChange,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm<searchInput>();
+  const { setSearchBarValue } = useContext(PageContext);
 
-  // searchBarValue: searchBar,
-  // searchBarValueState: setSearchBar,
-  // const [searchBar, setSearchBar] = useState("");
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    searchBarValueState!(e.target.value);
+    setSearchBarValue!(e.target.value);
   };
   return (
     <Stack spacing={4} alignItems="center" maxWidth="1400px" px="1rem">

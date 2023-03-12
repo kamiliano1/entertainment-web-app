@@ -1,28 +1,24 @@
-import { Button, Flex, Icon, Stack, Image } from "@chakra-ui/react";
-// import Image from "next/image";
-import React, { useState } from "react";
-import { useContext } from "react";
-import avatar from "../../../public/assets/image-avatar.png";
-import InputElement from "../Layout/InputElement";
+import { Button, Flex, Icon, Image, Stack } from "@chakra-ui/react";
+import { PageContext } from "@/src/Context";
+import { auth } from "@/src/firebase/clientApp";
+import { signOut } from "firebase/auth";
+import Link from "next/link";
+import React, { useContext } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";
 import { MdLocalMovies, MdMovie } from "react-icons/md";
 import { SiWindows11 } from "react-icons/si";
-import { PageContext } from "@/src/Context";
 import LoginModal from "../Modal/Modal";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/src/firebase/clientApp";
-import { signOut } from "firebase/auth";
-import Link from "next/link";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
   const { isOpen, setIsOpen, currentTab, setCurrentTab } =
     useContext(PageContext);
   const [user, loading, error] = useAuthState(auth);
+
   const logout = async () => {
     await signOut(auth);
   };
-  // const [currentTab, setCurrentTab] = useState<string>("home");
   return (
     <>
       <Flex
@@ -37,17 +33,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         height={{ lg: "90vh" }}
       >
         <LoginModal />
-        {/* {!user ? (
-        <Button
-          onClick={() => {
-            setIsOpen!((prev) => !prev);
-          }}
-        >
-          LogIn
-        </Button>
-      ) : (
         <Button onClick={logout}>LogOut</Button>
-      )} */}
         <Icon
           as={MdMovie}
           color="red"
@@ -114,13 +100,14 @@ const Navbar: React.FC<NavbarProps> = () => {
           </Link>
         </Stack>
         <Image
+          mt={{ lg: "1rem" }}
+          cursor="pointer"
           src={"assets/image-avatar.png"}
           boxSize={{ base: "24px", md: "32px", lg: "40px" }}
           alt="avatar image"
           border="1px solid white"
           borderRadius="50%"
-          // width="24"
-          // height="24"
+          onClick={() => setIsOpen!((prev) => !prev)}
         />
       </Flex>
     </>

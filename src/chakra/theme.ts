@@ -1,15 +1,7 @@
-// 1. Import `extendTheme`
-// import { extendTheme } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import {} from "next/router";
 import "@fontsource/outfit/300.css";
 import "@fontsource/outfit/500.css";
-// import { customIcons } from "./Input";
-// import "@fontsource/open-sans/300.css";
-// import "@fontsource/open-sans/400.css";
-// import "@fontsource/open-sans/700.css";
-// import { Button } from "./button";
-// 2. Call `extendTheme` and pass your custom values
 export const theme = extendTheme({
   colors: {
     darkBlue: {
@@ -41,7 +33,4 @@ export const theme = extendTheme({
       },
     }),
   },
-  // components: {
-  //   Button,
-  // },
 });

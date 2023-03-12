@@ -19,12 +19,10 @@ import Login from "./Login";
 import Register from "./Register";
 import { MdMovie } from "react-icons/md";
 export default function LoginModal() {
-  const { isOpen, setIsOpen, view, setModalView } = useContext(PageContext);
+  const { isOpen, setIsOpen, view } = useContext(PageContext);
   const initialRef = useRef(null);
   return (
     <>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
-
       <Modal
         initialFocusRef={initialRef}
         isOpen={isOpen}
@@ -32,7 +30,11 @@ export default function LoginModal() {
         onClose={() => setIsOpen!(false)}
       >
         <ModalOverlay bg="darkBlue.1000" />
-        <ModalContent background="semiDarkBlue.1000" textColor="white">
+        <ModalContent
+          background="semiDarkBlue.1000"
+          textColor="white"
+          mx="1rem"
+        >
           <Flex position="relative" top="-20" justifyContent="center">
             <Icon
               as={MdMovie}
@@ -50,16 +52,7 @@ export default function LoginModal() {
           <ModalBody fontSize=".93rem">
             {view === "login" && <Login focusRef={initialRef} />}
             {view === "register" && <Register focusRef={initialRef} />}
-
-            {/* <Text>Don't have an account?</Text>
-            <Text onClick={() => setModalView!("register")} cursor="pointer">
-              Sign Up
-            </Text> */}
           </ModalBody>
-
-          {/* <ModalFooter>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
