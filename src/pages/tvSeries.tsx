@@ -6,13 +6,7 @@ import { MoviesInterface } from "../components/MoviesInterface/MoviesInterface";
 import Navbar from "../components/Navbar/Navbar";
 import { PageContext } from "../Context";
 export default function Home() {
-  const {
-    trendingList,
-    setTrendingList,
-    recommendedList,
-    movieList,
-    searchBarValue,
-  } = useContext(PageContext);
+  const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
   useEffect(() => {
     if (movieList)
