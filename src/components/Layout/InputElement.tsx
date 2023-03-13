@@ -1,15 +1,7 @@
-import React, { useState, useContext } from "react";
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputLeftElement,
-  Stack,
-} from "@chakra-ui/react";
-import { FiSearch } from "react-icons/fi";
 import { PageContext } from "@/src/Context";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Flex, Icon, Input, Stack } from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { FiSearch } from "react-icons/fi";
 type InputElementProps = {
   placeholder: string;
 };
@@ -20,11 +12,14 @@ const InputElement: React.FC<InputElementProps> = ({ placeholder }) => {
     setSearchBarValue!(e.target.value);
   };
   return (
-    <Stack spacing={4} alignItems="center" maxWidth="1400px" px="1rem">
-      <InputGroup>
-        <InputLeftElement
+    <Stack maxWidth="1400px" px="18px">
+      <Flex>
+        <Icon
+          alignSelf="center"
+          as={FiSearch}
+          color="white"
           pointerEvents="none"
-          children={<FiSearch color="white" />}
+          fontSize="1.3rem"
         />
         <Input
           onChange={onChange}
@@ -42,7 +37,7 @@ const InputElement: React.FC<InputElementProps> = ({ placeholder }) => {
             borderRadius: 0,
           }}
         />
-      </InputGroup>
+      </Flex>
     </Stack>
   );
 };

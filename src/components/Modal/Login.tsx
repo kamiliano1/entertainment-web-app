@@ -23,13 +23,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<loginUserInputs>();
-  const [signInWithEmailAndPassword, user, loading, firebaseError] =
+  const [signInWithEmailAndPassword, userName, loading, firebaseError] =
     useSignInWithEmailAndPassword(auth);
-  const { setModalView, setIsOpen } = useContext(PageContext);
+  const { setModalView, setIsOpen, isOpen } = useContext(PageContext);
 
   useEffect(() => {
-    if (user) setIsOpen!(false);
-  }, [user]);
+    if (userName) setIsOpen!(false);
+  }, [setIsOpen, userName]);
   const onSubmit: SubmitHandler<loginUserInputs> = (data) => {
     // console.log(firebaseError);
 
@@ -61,7 +61,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
           />
           {errors.email?.type === "required" && (
             <Text position="absolute" top=".5rem" right="1rem" color="red">
-              Can't be empty
+              {"Can't be empty"}
             </Text>
           )}
         </Flex>
@@ -84,7 +84,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
           />
           {errors.password?.type === "required" && (
             <Text position="absolute" top=".5rem" right="1rem" color="red">
-              Can't be empty
+              {"Can't be empty"}
             </Text>
           )}
         </Flex>
@@ -101,11 +101,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
           py="1.5rem"
           _hover={{ color: "black", backgroundColor: "white" }}
         >
-          Login to your account
+          {"Login to your account"}
         </Button>
 
         <Flex justifyContent="center" p="1.5rem 0 2rem 0">
-          <Text>Don't have an account? </Text>
+          <Text>{"Don't have an account?"} </Text>
           <Text
             onClick={() => setModalView!("register")}
             ml={2}

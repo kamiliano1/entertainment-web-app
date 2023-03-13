@@ -25,6 +25,7 @@ export default function Home() {
     .filter((movie) => movie.isBookMarked === true)
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
@@ -43,6 +44,7 @@ export default function Home() {
     )
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
@@ -61,6 +63,7 @@ export default function Home() {
     )
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
@@ -74,22 +77,6 @@ export default function Home() {
       />
     ));
 
-  const movieItems = movieList!
-    .filter((movies) => movies.category === "TV Series")
-    .map((item) => (
-      <MovieItem
-        thumbnail={item.thumbnail}
-        thumnailSmall={item.thumbnail.regular.small}
-        thumnailMedium={item.thumbnail.regular.medium}
-        thumnailLarge={item.thumbnail.regular.large}
-        title={item.title}
-        year={item.year}
-        category={item.category}
-        rating={item.rating}
-        isBookMarked={item.isBookMarked}
-        isTrending={item.isTrending}
-      />
-    ));
   return (
     <Box display={{ lg: "flex" }} my="2rem">
       <Navbar />

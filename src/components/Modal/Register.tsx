@@ -34,7 +34,6 @@ const Register: React.FC<RegisterProps> = () => {
   const [error, setError] = useState("");
   const { setModalView, setIsOpen } = useContext(PageContext);
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
-    console.log(firebaseError);
     if (firebaseError) setError("A user with that email already exists");
     if (data.password.length < 6) {
       setError("Pasword must contain at least 6 characters");
@@ -59,7 +58,7 @@ const Register: React.FC<RegisterProps> = () => {
       createUserDocument(userCredentials.user);
       setIsOpen!(false);
     }
-  }, [userCredentials]);
+  }, [userCredentials, setIsOpen]);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +81,7 @@ const Register: React.FC<RegisterProps> = () => {
           />
           {errors.email?.type === "required" && (
             <Text position="absolute" top=".5rem" right="1rem" color="red">
-              Can't be empty
+              {"Can't be empty"}
             </Text>
           )}
         </Flex>
@@ -105,7 +104,7 @@ const Register: React.FC<RegisterProps> = () => {
           />
           {errors.password?.type === "required" && (
             <Text position="absolute" top=".5rem" right="1rem" color="red">
-              Can't be empty
+              {"Can't be empty"}
             </Text>
           )}
         </Flex>
@@ -130,7 +129,7 @@ const Register: React.FC<RegisterProps> = () => {
           />
           {errors.repeatPassword?.type === "required" && (
             <Text position="absolute" top=".5rem" right="1rem" color="red">
-              Can't be empty
+              {"Can't be empty"}
             </Text>
           )}
         </Flex>

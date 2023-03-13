@@ -27,15 +27,7 @@ const TrendingItem: React.FC<MoviesInterface> = ({
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const { setMovieList, openLoginModal } = useContext(PageContext);
-  const loadingSkielet = () => {
-    console.log(loadingImage);
 
-    setLoadingImage(false);
-    console.log(loadingImage, "po");
-  };
-  // useEffect(() => {
-  //   console.log(loadingImage);
-  // }, [loadingImage]);
   const toggleBookmark = (title: string) => {
     setMovieList!((prev) =>
       prev.map((item) =>
@@ -47,22 +39,20 @@ const TrendingItem: React.FC<MoviesInterface> = ({
   const backgroundOpacity = isHover ? "0.5" : "0";
   const icon = category === "Movie" ? MdLocalMovies : GiTv;
   return (
-    <>
+    <Box>
       {loadingImage ? (
         <Box bg="semiDarkBlue.1000">
-          {/* <SkeletonCircle size="10" /> */}
           <Skeleton
-            // position="relative"
             borderRadius="8px"
             bg="semiDarkBlue.1000"
             noOfLines={4}
             width={{ base: "240px", md: "470px" }}
             height={{ base: "140px", md: "230px" }}
           />
-          {/* <Image srcSet={{base:thumnailSmall, lg:thumnailSmall}}>/ */}
           <Image
             w={0}
             h={0}
+            alt=""
             src={thumnailLarge}
             onLoad={() => {
               setLoadingImage(false);
@@ -79,7 +69,7 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           color="white"
           borderRadius="8px"
           backgroundSize="cover"
-          backgroundColor="rgba(255, 0, 0, 0.5)"
+          backgroundColor="semiDarkBlue.1000"
           width={{ base: "240px", md: "470px" }}
           height={{ base: "140px", md: "230px" }}
           backgroundImage={{
@@ -87,10 +77,6 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
           }}
         >
-          {/* <Image
-            src={thumnailLarge}
-            // onLoad={() => setLoadingImage(true)}
-          ></Image> */}
           {isHover && (
             <Flex
               alignItems="center"
@@ -182,6 +168,9 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             alignSelf="start"
             borderRadius="50%"
             opacity="50%"
+            _hover={{
+              opacity: "100%",
+            }}
           >
             <Icon
               onMouseEnter={() => setIsHover(false)}
@@ -192,14 +181,13 @@ const TrendingItem: React.FC<MoviesInterface> = ({
               _hover={{
                 borderRadius: "50%",
                 backgroundColor: "white",
-                opacity: "1",
                 textColor: "black",
               }}
             ></Icon>
           </AspectRatio>
         </Flex>
       )}
-    </>
+    </Box>
   );
 };
 export default TrendingItem;

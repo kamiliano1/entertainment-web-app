@@ -24,6 +24,8 @@ type PageContextType = {
 
   setSearchBarValue?: Dispatch<SetStateAction<string>>;
 
+  // setBookmarkList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+
   movieList?: MoviesInterface[];
   setMovieList?: Dispatch<SetStateAction<MoviesInterface[]>>;
 };
@@ -48,6 +50,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [searchBarValue, setSearchBarValue] = useState("");
 
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
+  // const [bookmarkList, setBookmarkList] = useState<MoviesInterface[]>([]);
 
   const [user, loading, error] = useAuthState(auth);
   const openLoginModal = () => {
@@ -57,9 +60,6 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
   useEffect(() => {
-    // console.log("local", localStorage.getItem("bookmark"));
-    // if (localStorage.getItem("bookmark")?.length)
-
     if (localStorage.getItem("bookmark")) {
       console.log(JSON.parse(localStorage.getItem("bookmark") as string));
       setMovieList(JSON.parse(localStorage.getItem("bookmark") as string));
@@ -69,17 +69,14 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
       .then((res) => res.json())
       .then((data) => setMovieList(data));
   }, []);
-  // localStorage.getItem("bookmark");
   useEffect(() => {
-    // console.log(movieList);
-
     if (movieList.length)
       localStorage.setItem("bookmark", JSON.stringify(movieList));
-    // localStorage.setItem("bookmarkk", JSON.stringify(bookMarkList));
-    // localStorage.setItem("bookmarkkk", JSON.stringify(false));
-    // console.log(bookMarkList);
   }, [movieList]);
 
+  // useEffect(() => {
+  //   console.log(bookmarkList, "bookmarks");
+  // }, [bookmarkList]);
   return (
     <PageContext.Provider
       value={{
@@ -94,6 +91,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setMovieList,
         setCurrentTab,
         currentTab,
+        // setBookmarkList,
       }}
     >
       {children}

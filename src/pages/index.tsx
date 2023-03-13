@@ -1,11 +1,12 @@
-import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { Box, Flex, Skeleton, Stack, Text } from "@chakra-ui/react";
+import { useContext, useEffect, useRef, useState } from "react";
 import InputElement from "../components/Layout/InputElement";
 import MovieItem from "../components/Movie/MovieItem";
 import { MoviesInterface } from "../components/MoviesInterface/MoviesInterface";
 import Navbar from "../components/Navbar/Navbar";
 import TrendingItem from "../components/Trending/TrendingItem";
 import { PageContext } from "../Context";
+// import HorizontalScroll from "react-scroll-horizontal";
 export default function Home() {
   const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
@@ -22,6 +23,7 @@ export default function Home() {
 
   const searchItems = searchedMovie.map((item) => (
     <MovieItem
+      key={item.title}
       thumbnail={item.thumbnail}
       thumnailSmall={item.thumbnail.regular.small}
       thumnailMedium={item.thumbnail.regular.medium}
@@ -39,6 +41,7 @@ export default function Home() {
     .filter((movies) => movies.isTrending === false)
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
@@ -55,6 +58,7 @@ export default function Home() {
     .filter((movies) => movies.isTrending)
     .map((item) => (
       <TrendingItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.trending!.small}
         thumnailLarge={item.thumbnail.trending!.large}
@@ -66,8 +70,9 @@ export default function Home() {
         isTrending={item.isTrending}
       />
     ));
+
   return (
-    <Box display={{ lg: "flex" }} my="2rem">
+    <Box display={{ lg: "flex" }} my={{ lg: "2rem" }}>
       <Navbar />
       <Stack mt={{ lg: "2rem" }}>
         <InputElement placeholder={"Search for movies or TV series"} />
@@ -97,10 +102,10 @@ export default function Home() {
               Trending
             </Text>
             <Flex
-              // width="3710px"
               px="1rem"
-              flexWrap="nowrap"
-              overflowX="scroll"
+              pr="5rem"
+              width={{ lg: "calc(100vw - 1rem - 96px)" }}
+              overflowX="auto"
               gap={{ base: "16px", md: "40px" }}
             >
               {trendingsItems}
@@ -124,13 +129,8 @@ export default function Home() {
           px="1rem"
           flexWrap="wrap"
           gap="1rem"
-          // px="1rem"
           w={{ lg: "90vw" }}
-          // backgroundColor="red"
-          // w="90vw"
-          // mx="2rem"
-          // alignContent="center"
-          maxWidth="3000px"
+          maxWidth="2600px"
         >
           {searchBarValue ? searchItems : recommendedItems}
         </Flex>

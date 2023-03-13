@@ -25,6 +25,7 @@ export default function Home() {
     .filter((movie) => movie.category === "TV Series")
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
@@ -42,6 +43,7 @@ export default function Home() {
     .filter((movies) => movies.category === "TV Series")
     .map((item) => (
       <MovieItem
+        key={item.title}
         thumbnail={item.thumbnail}
         thumnailSmall={item.thumbnail.regular.small}
         thumnailMedium={item.thumbnail.regular.medium}
