@@ -1,23 +1,18 @@
+import { PageContext } from "@/src/Context";
 import {
-  useDisclosure,
-  Button,
+  Flex,
+  Icon,
   Modal,
-  ModalOverlay,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Input,
-  Text,
-  Icon,
-  Flex,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { useContext, useRef } from "react";
-import { PageContext } from "@/src/Context";
+import { MdMovie } from "react-icons/md";
 import Login from "./Login";
 import Register from "./Register";
-import { MdMovie } from "react-icons/md";
+import UserSettings from "./UserSettings";
 export default function LoginModal() {
   const { isOpen, setIsOpen, view } = useContext(PageContext);
   const initialRef = useRef(null);
@@ -29,7 +24,7 @@ export default function LoginModal() {
         isCentered={true}
         onClose={() => setIsOpen!(false)}
       >
-        <ModalOverlay bg="darkBlue.1000" />
+        <ModalOverlay bg="darkBlue.1000" w="100%" h="100%" />
         <ModalContent
           background="semiDarkBlue.1000"
           textColor="white"
@@ -47,11 +42,13 @@ export default function LoginModal() {
           <ModalHeader fontSize="2rem" fontWeight={300}>
             {view === "login" && "Login"}
             {view === "register" && "Sign Up"}
+            {view === "userSettings" && "Account Settings"}
           </ModalHeader>
-          <ModalCloseButton />
+          {/* <ModalCloseButton /> */}
           <ModalBody fontSize=".93rem">
             {view === "login" && <Login focusRef={initialRef} />}
             {view === "register" && <Register focusRef={initialRef} />}
+            {view === "userSettings" && <UserSettings focusRef={initialRef} />}
           </ModalBody>
         </ModalContent>
       </Modal>

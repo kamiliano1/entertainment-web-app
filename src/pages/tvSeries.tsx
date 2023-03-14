@@ -57,7 +57,10 @@ export default function Home() {
       />
     ));
   return (
-    <Box display={{ lg: "flex" }} my="2rem">
+    <Box
+      display={{ lg: "flex" }}
+      mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
+    >
       <Navbar />
       <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
         <InputElement placeholder="Search for TV series" />
@@ -69,9 +72,8 @@ export default function Home() {
             as="h1"
             textColor="white"
             fontSize={{ base: "20px", md: "32px" }}
-            lineHeight={{ base: "25.2px", md: "40.32px" }}>{`Found ${
-            searchedMovie.length
-          } result${
+            lineHeight={{ base: "25.2px", md: "40.32px" }}
+          >{`Found ${searchedMovie.length} result${
             searchedMovie.length === 1 ? "" : "s"
           } for '${searchBarValue}' `}</Text>
         ) : (
@@ -82,16 +84,22 @@ export default function Home() {
             as="h1"
             textColor="white"
             fontSize={{ base: "20px", md: "32px" }}
-            lineHeight={{ base: "25.2px", md: "40.32px" }}>
+            lineHeight={{ base: "25.2px", md: "40.32px" }}
+          >
             TV Series
           </Text>
         )}
         <Flex
           px="1rem"
           flexWrap="wrap"
-          gap="1rem"
+          gap={{
+            base: ".9375rem 1rem",
+            md: "1.875rem 1.5rem",
+            lg: "2.5rem 2rem",
+          }}
           w={{ lg: "90vw" }}
-          maxWidth="3000px">
+          maxWidth="3000px"
+        >
           {searchBarValue ? searchItems : movieItems}
         </Flex>
       </Stack>

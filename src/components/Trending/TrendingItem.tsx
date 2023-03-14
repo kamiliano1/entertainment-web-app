@@ -1,20 +1,11 @@
 import { PageContext } from "@/src/Context";
-import {
-  AspectRatio,
-  Box,
-  Flex,
-  Icon,
-  Stack,
-  Text,
-  Image,
-} from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import { AspectRatio, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";
 import { MdLocalMovies } from "react-icons/md";
 import { MoviesInterface } from "../MoviesInterface/MoviesInterface";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 const TrendingItem: React.FC<MoviesInterface> = ({
   title,
   thumnailSmall,
@@ -25,7 +16,6 @@ const TrendingItem: React.FC<MoviesInterface> = ({
   isBookMarked,
   isHovered,
 }) => {
-  const [loadingImage, setLoadingImage] = useState(true);
   const { setMovieList, openLoginModal } = useContext(PageContext);
 
   const toggleBookmark = (title: string) => {
@@ -54,7 +44,8 @@ const TrendingItem: React.FC<MoviesInterface> = ({
       backgroundImage={{
         base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
         md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
-      }}>
+      }}
+    >
       {isHover && (
         <Flex
           alignItems="center"
@@ -62,7 +53,8 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           w="calc(100% - 2rem)"
           h="calc(100% - 2rem)"
           justifyContent="center"
-          zIndex={2}>
+          zIndex={2}
+        >
           <Flex
             cursor="pointer"
             background="rgba(255, 255, 255, .25)"
@@ -71,7 +63,8 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             borderRadius="28.5px"
             alignItems="center"
             zIndex={30}
-            onClick={openLoginModal}>
+            onClick={openLoginModal}
+          >
             <Icon fontSize="35px" as={AiFillPlayCircle}></Icon>
             <Text fontSize="18px" px="1rem" fontWeight={500}>
               Play
@@ -84,14 +77,16 @@ const TrendingItem: React.FC<MoviesInterface> = ({
           as="h2"
           fontWeight={500}
           fontSize={{ base: "15px", md: "24px" }}
-          lineHeight={{ base: "19px", md: "30px" }}>
+          lineHeight={{ base: "19px", md: "30px" }}
+        >
           {title}
         </Text>
         <Flex alignItems="center" order="-1">
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "15px" }}>
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
+          >
             {year}
           </Text>
           <Text
@@ -101,12 +96,14 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Icon as={icon} fontSize={{ lg: "1.3rem" }} mx=".2rem" />
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "15px" }}>
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
+          >
             {" "}
             {category}
           </Text>
@@ -117,11 +114,13 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Text
             as="p"
             opacity={0.75}
-            fontSize={{ base: "12px", md: "15px", lg: "15px" }}>
+            fontSize={{ base: "12px", md: "15px", lg: "15px" }}
+          >
             {" "}
             {rating}
           </Text>
@@ -140,7 +139,8 @@ const TrendingItem: React.FC<MoviesInterface> = ({
         opacity="50%"
         _hover={{
           opacity: "100%",
-        }}>
+        }}
+      >
         <Icon
           onMouseEnter={() => setIsHover(false)}
           onMouseLeave={() => setIsHover(true)}
@@ -151,7 +151,8 @@ const TrendingItem: React.FC<MoviesInterface> = ({
             borderRadius: "50%",
             backgroundColor: "white",
             textColor: "black",
-          }}></Icon>
+          }}
+        ></Icon>
       </AspectRatio>
     </Flex>
   );

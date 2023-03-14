@@ -1,23 +1,12 @@
 import { PageContext } from "@/src/Context";
-import {
-  AspectRatio,
-  Box,
-  Flex,
-  Icon,
-  Image,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-// import Image from "next/image";
+import { AspectRatio, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+
 import React, { useContext, useState } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";
 import { MdLocalMovies } from "react-icons/md";
-// import { MoviesInterface } from "../Trending/TrendingItemInterface";
+
 import { MoviesInterface } from "../MoviesInterface/MoviesInterface";
 const MovieItem: React.FC<MoviesInterface> = ({
   title,
@@ -49,7 +38,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
       direction="column"
       textColor="white"
       flexGrow={1}
-      flexBasis={{ base: "154px", md: "220px", lg: "280px" }}>
+      flexBasis={{ base: "154px", md: "220px", lg: "280px" }}
+    >
       <Flex
         borderRadius="8px"
         onMouseEnter={() => setIsHover(true)}
@@ -63,7 +53,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
           base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
           md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailMedium})`,
           lg: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
-        }}>
+        }}
+      >
         {isHover && (
           <Flex
             alignItems="center"
@@ -71,7 +62,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             w="100%"
             h="100%"
             justifyContent="center"
-            zIndex={2}>
+            zIndex={2}
+          >
             <Flex
               cursor="pointer"
               background="rgba(255, 255, 255, .25)"
@@ -80,7 +72,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
               borderRadius="28.5px"
               alignItems="center"
               zIndex={30}
-              onClick={openLoginModal}>
+              onClick={openLoginModal}
+            >
               <Icon fontSize="22px" as={AiFillPlayCircle}></Icon>
               <Text fontSize="15px" px="1rem" fontWeight={500}>
                 Play
@@ -103,7 +96,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
           opacity="50%"
           _hover={{
             opacity: "100%",
-          }}>
+          }}
+        >
           <Icon
             onMouseEnter={() => setIsHover(false)}
             onMouseLeave={() => setIsHover(true)}
@@ -114,7 +108,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
               borderRadius: "50%",
               backgroundColor: "white",
               textColor: "black",
-            }}></Icon>
+            }}
+          ></Icon>
         </AspectRatio>
       </Flex>
       <Stack justify="end">
@@ -122,7 +117,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
           as="h2"
           fontWeight={500}
           fontSize={{ base: "14px", md: "18px" }}
-          lineHeight={{ base: "18px", md: "23px" }}>
+          lineHeight={{ base: "18px", md: "23px" }}
+        >
           {title}
         </Text>
         <Flex alignItems="center" order="-1">
@@ -136,7 +132,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Icon as={icon} fontSize={{ lg: "1.3rem" }} mx=".2rem" />
           <Text as="p" opacity={0.75} fontSize={{ base: "11px", md: "13px" }}>
             {" "}
@@ -149,7 +146,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Text as="p" opacity={0.75} fontSize={{ base: "11px", md: "13px" }}>
             {" "}
             {rating}

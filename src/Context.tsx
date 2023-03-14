@@ -8,7 +8,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
 import { auth } from "./firebase/clientApp";
-type ModalViewType = "login" | "register";
+type ModalViewType = "login" | "register" | "userSettings";
 export type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
 type PageContextType = {
   isOpen: boolean;
@@ -23,8 +23,6 @@ type PageContextType = {
   setCurrentTab?: Dispatch<SetStateAction<PageNameType>>;
 
   setSearchBarValue?: Dispatch<SetStateAction<string>>;
-
-  // setBookmarkList?: Dispatch<SetStateAction<MoviesInterface[]>>;
 
   movieList?: MoviesInterface[];
   setMovieList?: Dispatch<SetStateAction<MoviesInterface[]>>;
@@ -50,7 +48,6 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [searchBarValue, setSearchBarValue] = useState("");
 
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
-  // const [bookmarkList, setBookmarkList] = useState<MoviesInterface[]>([]);
 
   const [user, loading, error] = useAuthState(auth);
   const openLoginModal = () => {
@@ -61,7 +58,6 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   };
   useEffect(() => {
     if (localStorage.getItem("bookmark")) {
-      console.log(JSON.parse(localStorage.getItem("bookmark") as string));
       setMovieList(JSON.parse(localStorage.getItem("bookmark") as string));
       return;
     }
@@ -69,14 +65,15 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
       .then((res) => res.json())
       .then((data) => setMovieList(data));
   }, []);
+
   useEffect(() => {
     if (movieList.length)
       localStorage.setItem("bookmark", JSON.stringify(movieList));
   }, [movieList]);
+  useEffect(() => {
+    if (user) setModalView("userSettings");
+  }, [user, modalView]);
 
-  // useEffect(() => {
-  //   console.log(bookmarkList, "bookmarks");
-  // }, [bookmarkList]);
   return (
     <PageContext.Provider
       value={{
@@ -91,8 +88,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setMovieList,
         setCurrentTab,
         currentTab,
-        // setBookmarkList,
-      }}>
+      }}
+    >
       {children}
     </PageContext.Provider>
   );

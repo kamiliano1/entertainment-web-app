@@ -1,22 +1,22 @@
-import { Box, Button, Flex, Icon, Image, Stack, Text } from "@chakra-ui/react";
 import { PageContext, PageNameType } from "@/src/Context";
 import { auth } from "@/src/firebase/clientApp";
-import { signOut } from "firebase/auth";
+import { Flex, Icon, Image, Stack } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";
 import { MdLocalMovies, MdMovie } from "react-icons/md";
-import { SiWindows11 } from "react-icons/si";
 import { RxAvatar } from "react-icons/rx";
+import { SiWindows11 } from "react-icons/si";
 import LoginModal from "../Modal/Modal";
-import { useRouter } from "next/router";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
-  const { isOpen, setIsOpen, currentTab, setCurrentTab } =
+  const { isOpen, setIsOpen, currentTab, setCurrentTab, movieList } =
     useContext(PageContext);
   const [user, loading, error] = useAuthState(auth);
+  const [userLoading, setUserLoading] = useState(false);
   const router = useRouter();
   const currentPageAddress = router.pathname.split("/")[1] as PageNameType;
   const [isLogged, setIsLogged] = useState(false);
@@ -29,9 +29,6 @@ const Navbar: React.FC<NavbarProps> = () => {
       setCurrentTab(currentPageAddress ? currentPageAddress : "home");
   }, [router, setCurrentTab, currentPageAddress]);
 
-  const logout = async () => {
-    await signOut(auth);
-  };
   return (
     <>
       <Flex
@@ -44,24 +41,26 @@ const Navbar: React.FC<NavbarProps> = () => {
         direction={{ lg: "column" }}
         width={{ lg: "96px" }}
         height={{ lg: "90vh" }}
-        position={{ lg: "fixed" }}>
+        position={{ lg: "fixed" }}
+      >
         <LoginModal />
-        {/* <Button onClick={logout}>LogOut</Button> */}
         <Icon
           as={MdMovie}
           color="red"
           fontSize={{ base: "30px", md: "38px" }}
         />
         <Stack
+          justifyContent="center"
           alignItems="center"
           direction={{ base: "row", lg: "column" }}
           spacing="2rem"
           mt={{ lg: "2rem" }}
-          mb={{ lg: "auto" }}>
+          mb={{ lg: "auto" }}
+        >
           <Link href="/">
             <Icon
               as={SiWindows11}
-              color={`${currentTab === "home" ? "red" : "greyishBlue.1000"}`}
+              color={`${currentTab === "home" ? "white" : "greyishBlue.1000"}`}
               fontSize={{ base: "16px", md: "20px" }}
               _hover={{ color: "red" }}
               name="home"
@@ -70,10 +69,13 @@ const Navbar: React.FC<NavbarProps> = () => {
               }}
             />
           </Link>
+
           <Link href="/movies">
             <Icon
               as={MdLocalMovies}
-              color={`${currentTab === "movies" ? "red" : "greyishBlue.1000"}`}
+              color={`${
+                currentTab === "movies" ? "white" : "greyishBlue.1000"
+              }`}
               fontSize={{ base: "24px", md: "28px" }}
               _hover={{ color: "red" }}
               name="movies"
@@ -82,11 +84,12 @@ const Navbar: React.FC<NavbarProps> = () => {
               }}
             />
           </Link>
+
           <Link href="/tvSeries">
             <Icon
               as={GiTv}
               color={`${
-                currentTab === "tvSeries" ? "red" : "greyishBlue.1000"
+                currentTab === "tvSeries" ? "white" : "greyishBlue.1000"
               }`}
               fontSize={{ base: "20px", md: "25px" }}
               _hover={{ color: "red" }}
@@ -100,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Icon
               as={BsFillBookmarkFill}
               color={`${
-                currentTab === "bookmarked" ? "red" : "greyishBlue.1000"
+                currentTab === "bookmarked" ? "white" : "greyishBlue.1000"
               }`}
               fontSize={{ base: "18px", md: "20px" }}
               _hover={{ color: "red" }}

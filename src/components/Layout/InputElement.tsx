@@ -12,7 +12,7 @@ const InputElement: React.FC<InputElementProps> = ({ placeholder }) => {
     setSearchBarValue!(e.target.value);
   };
   return (
-    <Stack maxWidth="1400px" px="18px">
+    <Stack maxWidth="1400px" px="18px" mt={{ base: "24px", md: "33px" }}>
       <Flex>
         <Icon
           alignSelf="center"

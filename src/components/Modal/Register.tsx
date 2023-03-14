@@ -1,8 +1,8 @@
 import { PageContext } from "@/src/Context";
-import { auth, firestore } from "@/src/firebase/clientApp";
+import { auth, firestore, storage } from "@/src/firebase/clientApp";
 import { Input, Button, Text, Flex } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import React, {
   MutableRefObject,
   useContext,
@@ -11,6 +11,7 @@ import React, {
 } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 type RegisterProps = { focusRef: MutableRefObject<null> };
 
 type createUserInputs = {
@@ -32,7 +33,8 @@ const Register: React.FC<RegisterProps> = () => {
     firebaseError,
   ] = useCreateUserWithEmailAndPassword(auth);
   const [error, setError] = useState("");
-  const { setModalView, setIsOpen } = useContext(PageContext);
+  const [userLoading, setUserLoading] = useState(false);
+  const { setModalView, setIsOpen, movieList } = useContext(PageContext);
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
     if (firebaseError) setError("A user with that email already exists");
     if (data.password.length < 6) {
@@ -53,12 +55,27 @@ const Register: React.FC<RegisterProps> = () => {
     );
   };
 
+  const createUserBookmark = async () => {
+    setUserLoading(true);
+    try {
+      const postDocRef = await addDoc(
+        collection(firestore, "posts"),
+        movieList
+      );
+      const imageRef = ref(storage, `posts/${postDocRef.id}/bookmark`);
+      await updateDoc(postDocRef, { bookmark: imageRef });
+    } catch (error: any) {
+      console.log("handle user", error.message);
+    }
+    setUserLoading(false);
+  };
   useEffect(() => {
     if (userCredentials) {
       createUserDocument(userCredentials.user);
       setIsOpen!(false);
     }
   }, [userCredentials, setIsOpen]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

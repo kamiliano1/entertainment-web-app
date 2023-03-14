@@ -74,7 +74,10 @@ export default function Home() {
     ));
 
   return (
-    <Box display={{ lg: "flex" }} my={{ lg: "2rem" }}>
+    <Box
+      display={{ lg: "flex" }}
+      mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
+    >
       <Navbar />
       <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
         <InputElement placeholder={"Search for movies or TV series"} />
@@ -86,9 +89,8 @@ export default function Home() {
             as="h1"
             textColor="white"
             fontSize={{ base: "20px", md: "32px" }}
-            lineHeight={{ base: "25.2px", md: "40.32px" }}>{`Found ${
-            searchedMovie.length
-          } result${
+            lineHeight={{ base: "25.2px", md: "40.32px" }}
+          >{`Found ${searchedMovie.length} result${
             searchedMovie.length === 1 ? "" : "s"
           } for '${searchBarValue}' `}</Text>
         ) : (
@@ -100,7 +102,8 @@ export default function Home() {
               as="h1"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}>
+              lineHeight={{ base: "25.2px", md: "40.32px" }}
+            >
               Trending
             </Text>
             <Flex
@@ -108,7 +111,8 @@ export default function Home() {
               pr={{ lg: "5rem" }}
               width={{ lg: "calc(100vw - 1rem - 96px)" }}
               overflowX="auto"
-              gap={{ base: "16px", md: "40px" }}>
+              gap={{ base: "16px", md: "40px" }}
+            >
               {trendingsItems}
             </Flex>
 
@@ -120,7 +124,8 @@ export default function Home() {
               as="h2"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}>
+              lineHeight={{ base: "25.2px", md: "40.32px" }}
+            >
               Recommended for you
             </Text>
           </>
@@ -128,9 +133,14 @@ export default function Home() {
         <Flex
           px="1rem"
           flexWrap="wrap"
-          gap="1rem"
+          gap={{
+            base: ".9375rem 1rem",
+            md: "1.875rem 1.5rem",
+            lg: "2.5rem 2rem",
+          }}
           w={{ lg: "90vw" }}
-          maxWidth="2600px">
+          maxWidth="2600px"
+        >
           {searchBarValue ? searchItems : recommendedItems}
         </Flex>
       </Stack>
