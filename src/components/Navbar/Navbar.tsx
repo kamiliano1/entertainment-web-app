@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         height={{ lg: "90vh" }}
         position={{ lg: "fixed" }}>
         <LoginModal />
-        <Button onClick={logout}>LogOut</Button>
+        {/* <Button onClick={logout}>LogOut</Button> */}
         <Icon
           as={MdMovie}
           color="red"
