@@ -7,6 +7,8 @@ import Navbar from "../components/Navbar/Navbar";
 import TrendingItem from "../components/Trending/TrendingItem";
 import { PageContext } from "../Context";
 // import HorizontalScroll from "react-scroll-horizontal";
+// import "./index.css";
+// import "./App.css";
 export default function Home() {
   const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
@@ -74,7 +76,7 @@ export default function Home() {
   return (
     <Box display={{ lg: "flex" }} my={{ lg: "2rem" }}>
       <Navbar />
-      <Stack mt={{ lg: "2rem" }}>
+      <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
         <InputElement placeholder={"Search for movies or TV series"} />
         {searchBarValue ? (
           <Text
@@ -84,8 +86,9 @@ export default function Home() {
             as="h1"
             textColor="white"
             fontSize={{ base: "20px", md: "32px" }}
-            lineHeight={{ base: "25.2px", md: "40.32px" }}
-          >{`Found ${searchedMovie.length} result${
+            lineHeight={{ base: "25.2px", md: "40.32px" }}>{`Found ${
+            searchedMovie.length
+          } result${
             searchedMovie.length === 1 ? "" : "s"
           } for '${searchBarValue}' `}</Text>
         ) : (
@@ -97,17 +100,15 @@ export default function Home() {
               as="h1"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
+              lineHeight={{ base: "25.2px", md: "40.32px" }}>
               Trending
             </Text>
             <Flex
               px="1rem"
-              pr="5rem"
+              pr={{ lg: "5rem" }}
               width={{ lg: "calc(100vw - 1rem - 96px)" }}
               overflowX="auto"
-              gap={{ base: "16px", md: "40px" }}
-            >
+              gap={{ base: "16px", md: "40px" }}>
               {trendingsItems}
             </Flex>
 
@@ -119,8 +120,7 @@ export default function Home() {
               as="h2"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
+              lineHeight={{ base: "25.2px", md: "40.32px" }}>
               Recommended for you
             </Text>
           </>
@@ -130,8 +130,7 @@ export default function Home() {
           flexWrap="wrap"
           gap="1rem"
           w={{ lg: "90vw" }}
-          maxWidth="2600px"
-        >
+          maxWidth="2600px">
           {searchBarValue ? searchItems : recommendedItems}
         </Flex>
       </Stack>

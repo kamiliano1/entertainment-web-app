@@ -80,7 +80,7 @@ export default function Home() {
   return (
     <Box display={{ lg: "flex" }} my="2rem">
       <Navbar />
-      <Stack mt={{ lg: "2rem" }}>
+      <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
         <InputElement placeholder="Search for bookmarked shows" />
         {searchBarValue ? (
           <>
@@ -91,8 +91,9 @@ export default function Home() {
               as="h1"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >{`Found ${searchedMovie.length} result${
+              lineHeight={{ base: "25.2px", md: "40.32px" }}>{`Found ${
+              searchedMovie.length
+            } result${
               searchedMovie.length === 1 ? "" : "s"
             } for '${searchBarValue}' `}</Text>
             <Flex
@@ -100,8 +101,7 @@ export default function Home() {
               flexWrap="wrap"
               gap="1rem"
               w={{ lg: "90vw" }}
-              maxWidth="3000px"
-            >
+              maxWidth="3000px">
               {searchItemsBookmarked}
             </Flex>
           </>
@@ -114,8 +114,7 @@ export default function Home() {
               as="h1"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
+              lineHeight={{ base: "25.2px", md: "40.32px" }}>
               Bookmarked Movies
             </Text>
             {!movieItemsBookmarked.length && (
@@ -126,8 +125,7 @@ export default function Home() {
                 as="h2"
                 textColor="white"
                 fontSize={{ base: "20px", md: "32px" }}
-                lineHeight={{ base: "25.2px", md: "40.32px" }}
-              >
+                lineHeight={{ base: "25.2px", md: "40.32px" }}>
                 List is empty
               </Text>
             )}
@@ -136,8 +134,7 @@ export default function Home() {
               flexWrap="wrap"
               gap="1rem"
               w={{ lg: "90vw" }}
-              maxWidth="3000px"
-            >
+              maxWidth="3000px">
               {movieItemsBookmarked}
             </Flex>
             <Text
@@ -147,8 +144,7 @@ export default function Home() {
               as="h2"
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
+              lineHeight={{ base: "25.2px", md: "40.32px" }}>
               Bookmarked TV Series
               {!tvSeriesItemsBookmarked.length && (
                 <Text
@@ -157,8 +153,7 @@ export default function Home() {
                   as="p"
                   textColor="white"
                   fontSize={{ base: "20px", md: "32px" }}
-                  lineHeight={{ base: "25.2px", md: "40.32px" }}
-                >
+                  lineHeight={{ base: "25.2px", md: "40.32px" }}>
                   List is empty
                 </Text>
               )}
@@ -168,8 +163,7 @@ export default function Home() {
               flexWrap="wrap"
               gap="1rem"
               w={{ lg: "90vw" }}
-              maxWidth="3000px"
-            >
+              maxWidth="3000px">
               {tvSeriesItemsBookmarked}
             </Flex>
           </>

@@ -9,7 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
 import { auth } from "./firebase/clientApp";
 type ModalViewType = "login" | "register";
-type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
+export type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
 type PageContextType = {
   isOpen: boolean;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
@@ -92,8 +92,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setCurrentTab,
         currentTab,
         // setBookmarkList,
-      }}
-    >
+      }}>
       {children}
     </PageContext.Provider>
   );
