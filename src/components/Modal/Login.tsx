@@ -98,7 +98,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}>
+          _hover={{ color: "black", backgroundColor: "white" }}
+        >
           {"Login to your account"}
         </Button>
 
@@ -109,7 +110,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
             ml={2}
             color="red"
             cursor="pointer"
-            _hover={{ color: "white" }}>
+            _hover={{ color: "white" }}
+          >
             Sign Up
           </Text>
         </Flex>

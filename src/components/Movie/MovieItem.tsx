@@ -19,13 +19,12 @@ const MovieItem: React.FC<MoviesInterface> = ({
   isBookMarked,
   isHovered,
 }) => {
-  const { setMovieList, openLoginModal } = useContext(PageContext);
-  const toggleBookmark = (title: string) => {
-    setMovieList!((prev) =>
-      prev.map((item) =>
-        title === item.title ? { ...item, isBookMarked: !isBookMarked } : item
-      )
-    );
+  const { setMovieList, openLoginModal, bookmarkTitle, setBookmarkTitle } =
+    useContext(PageContext);
+  const toggleBookmark = (searchTitle: string) => {
+    bookmarkTitle.includes(searchTitle)
+      ? setBookmarkTitle!((prev) => prev.filter((item) => item !== searchTitle))
+      : setBookmarkTitle!((prev) => [...prev, title]);
   };
   const [isHover, setIsHover] = useState<boolean>(false);
   const backgroundOpacity = isHover ? "0.5" : "0";
@@ -103,7 +102,7 @@ const MovieItem: React.FC<MoviesInterface> = ({
             onMouseLeave={() => setIsHover(true)}
             onClick={() => toggleBookmark!(title)}
             px=".5rem"
-            as={isBookMarked ? BsFillBookmarkFill : BsBookmark}
+            as={bookmarkTitle.includes(title) ? BsFillBookmarkFill : BsBookmark}
             _hover={{
               borderRadius: "50%",
               backgroundColor: "white",

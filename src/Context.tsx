@@ -1,3 +1,4 @@
+import { doc, getDoc } from "firebase/firestore";
 import {
   createContext,
   Dispatch,
@@ -7,7 +8,7 @@ import {
 } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
-import { auth } from "./firebase/clientApp";
+import { auth, firestore } from "./firebase/clientApp";
 type ModalViewType = "login" | "register" | "userSettings";
 export type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";
 type PageContextType = {
@@ -50,11 +51,12 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [currentTab, setCurrentTab] = useState<PageNameType>("home");
 
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [bookmarkTitle, setBookmarkTitle] = useState<string[]>([]);
+  const [bookmarkTitle, setBookmarkTitle] = useState<string[]>([""]);
 
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
 
   const [user, loading, error] = useAuthState(auth);
+
   const openLoginModal = () => {
     if (!user) {
       setIsOpen(true);
@@ -63,30 +65,52 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    setBookmarkTitle(
-      movieList.filter((item) => item.isBookMarked).map((title) => title.title)
-    );
-    console.log(bookmarkTitle);
-    bookmarkTitle.includes;
-  }, [movieList]);
-  useEffect(() => {
-    if (localStorage.getItem("bookmark")) {
-      setMovieList(JSON.parse(localStorage.getItem("bookmark") as string));
-      return;
-    }
+    if (localStorage.getItem("bookmark") && !user)
+      setBookmarkTitle(JSON.parse(localStorage.getItem("bookmark") as string));
+
     fetch("data/data.json")
       .then((res) => res.json())
-      .then((data) => setMovieList(data));
+      .then((data) =>
+        setMovieList(
+          data.map((item: MoviesInterface) =>
+            bookmarkTitle.includes(item.title)
+              ? { ...item, isBookmarked: true }
+              : { ...item, isBookmarked: false }
+          )
+        )
+      );
   }, []);
 
   useEffect(() => {
-    if (movieList.length)
-      localStorage.setItem("bookmark", JSON.stringify(movieList));
-  }, [movieList]);
+    setMovieList((prev) =>
+      prev.map((item) =>
+        bookmarkTitle.includes(item.title)
+          ? { ...item, isBookMarked: true }
+          : { ...item, isBookMarked: false }
+      )
+    );
+  }, [bookmarkTitle]);
+  useEffect(() => {
+    if (bookmarkTitle.length !== 1 && !user)
+      localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
+  }, [bookmarkTitle]);
   useEffect(() => {
     if (user) setModalView("userSettings");
   }, [user, modalView]);
 
+  useEffect(() => {
+    if (user) {
+      const getBookmark = async () => {
+        try {
+          const bookmarkRef = doc(firestore, "users", user!.uid);
+          const bookmark = await getDoc(bookmarkRef);
+          const bookmarkData = bookmark.data();
+          if (bookmarkData) setBookmarkTitle(bookmarkData.bookmarkList);
+        } catch (error) {}
+      };
+      getBookmark();
+    }
+  }, [user]);
   return (
     <PageContext.Provider
       value={{
@@ -103,7 +127,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         currentTab,
         setBookmarkTitle,
         bookmarkTitle,
-      }}>
+      }}
+    >
       {children}
     </PageContext.Provider>
   );

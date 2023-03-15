@@ -1,16 +1,6 @@
 import { PageContext, PageNameType } from "@/src/Context";
-import { auth, firestore } from "@/src/firebase/clientApp";
-import { Button, Flex, Icon, Image, Stack } from "@chakra-ui/react";
-import { User } from "firebase/auth";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  runTransaction,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { auth } from "@/src/firebase/clientApp";
+import { Flex, Icon, Image, Stack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -39,83 +29,6 @@ const Navbar: React.FC<NavbarProps> = () => {
       setCurrentTab(currentPageAddress ? currentPageAddress : "home");
   }, [router, setCurrentTab, currentPageAddress]);
 
-  //firestore
-
-  const createUserDocument = async () => {
-    try {
-      await runTransaction(firestore, async (transaction) => {
-        // const bookmarkRef = doc(firestore, `users`, user!.uid);
-        // transaction.set(bookmarkRef, {
-        //   userId: user?.uid,
-        //   email: user?.email,
-        //   avatar: "",
-        //   createdAt: serverTimestamp(),
-        // });
-        transaction.set(
-          doc(
-            firestore,
-            `users/${user?.uid}/bookmarkSnippets`,
-            "imieFIlmuDwaTrzy"
-          ),
-          {
-            movieId: "tytulFIlmuDrugiego",
-          }
-        );
-        // await setDoc(bookmarkRef, {
-        //   userId: user?.uid,
-        //   createdAt: serverTimestamp(),
-        //   isBookmarked: false,
-        // });
-      });
-      // const bookmarkDoc = await getDoc(bookmarkRef);
-
-      // if (bookmarkDoc.exists()) {
-      //   console.log("jest juz taki dokument");
-      //   return;
-      // }
-
-      // create dokumenty
-    } catch (error: any) {
-      console.log("createUserDocumentError", error.message);
-    }
-  };
-  // const createUserDocument = async () => {
-  //   console.log("clicked");
-
-  //   try {
-  //     await runTransaction(firestore, async (transaction) => {
-  //       const bookmarkRef = doc(firestore, "bookmarked", "userLiked");
-  //       transaction.set(bookmarkRef, {
-  //         movieTitle: "userMovie",
-  //         createdAt: serverTimestamp(),
-  //       });
-  //       transaction.set(
-  //         doc(firestore, `users/${user?.uid}/bookmarkSnippets`, "imieFIlmu"),
-  //         {
-  //           movieId: "tytulFIlmu",
-  //         }
-  //       );
-  //       await setDoc(bookmarkRef, {
-  //         userId: user?.uid,
-  //         createdAt: serverTimestamp(),
-  //         isBookmarked: false,
-  //       });
-  //     });
-  //     // const bookmarkDoc = await getDoc(bookmarkRef);
-
-  //     // if (bookmarkDoc.exists()) {
-  //     //   console.log("jest juz taki dokument");
-  //     //   return;
-  //     // }
-
-  //     // create dokumenty
-  //   } catch (error: any) {
-  //     console.log("createUserDocumentError", error.message);
-  //   }
-  // };
-  const createUserDocuments = async () => {
-    await addDoc(collection(firestore, "user"), { name: "user" });
-  };
   return (
     <>
       <Flex
@@ -128,8 +41,8 @@ const Navbar: React.FC<NavbarProps> = () => {
         direction={{ lg: "column" }}
         width={{ lg: "96px" }}
         height={{ lg: "90vh" }}
-        position={{ lg: "fixed" }}>
-        <Button onClick={createUserDocument}>Klikaj</Button>
+        position={{ lg: "fixed" }}
+      >
         <LoginModal />
         <Icon
           as={MdMovie}
@@ -142,7 +55,8 @@ const Navbar: React.FC<NavbarProps> = () => {
           direction={{ base: "row", lg: "column" }}
           spacing="2rem"
           mt={{ lg: "2rem" }}
-          mb={{ lg: "auto" }}>
+          mb={{ lg: "auto" }}
+        >
           <Link href="/">
             <Icon
               as={SiWindows11}
@@ -216,7 +130,6 @@ const Navbar: React.FC<NavbarProps> = () => {
             cursor="pointer"
             as={RxAvatar}
             color="greyishBlue.1000"
-            // fontSize="2.7rem"
             fontSize={{ base: "24px", md: "32px", lg: "40px" }}
             mt={{ lg: "1rem" }}
             _hover={{ color: "red" }}

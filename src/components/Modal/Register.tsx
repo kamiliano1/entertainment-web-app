@@ -34,7 +34,8 @@ const Register: React.FC<RegisterProps> = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
   const [error, setError] = useState("");
   const [userLoading, setUserLoading] = useState(false);
-  const { setModalView, setIsOpen, movieList } = useContext(PageContext);
+  const { setModalView, setIsOpen, movieList, bookmarkTitle } =
+    useContext(PageContext);
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
     if (firebaseError) setError("A user with that email already exists");
     if (data.password.length < 6) {
@@ -49,28 +50,37 @@ const Register: React.FC<RegisterProps> = () => {
   };
 
   const createUserDocument = async (user: User) => {
+    // await addDoc(
+    // collection(firestore, "users"),
+    // JSON.parse(JSON.stringify(user))
+    // JSON.parse(JSON.stringify({ ...user, avatar: "", bookmarkList: [""] }))
     const userDocRef = doc(firestore, "users", user.uid);
-    await setDoc(userDocRef, JSON.parse(JSON.stringify(user)));
+    await setDoc(
+      userDocRef,
+      JSON.parse(
+        JSON.stringify({ ...user, avatar: "", bookmarkList: bookmarkTitle })
+      )
+    );
+    // );
   };
 
-  const createUserBookmark = async () => {
-    setUserLoading(true);
-    try {
-      const postDocRef = await addDoc(
-        collection(firestore, "posts"),
-        movieList
-      );
-      const imageRef = ref(storage, `posts/${postDocRef.id}/bookmark`);
-      await updateDoc(postDocRef, { bookmark: imageRef });
-    } catch (error: any) {
-      console.log("handle user", error.message);
-    }
-    setUserLoading(false);
-  };
+  // const createUserBookmark = async () => {
+  //   setUserLoading(true);
+  //   try {
+  //     const postDocRef = await addDoc(
+  //       collection(firestore, "posts"),
+  //       movieList
+  //     );
+  //     const imageRef = ref(storage, `posts/${postDocRef.id}/bookmark`);
+  //     await updateDoc(postDocRef, { bookmark: imageRef });
+  //   } catch (error: any) {
+  //     console.log("handle user", error.message);
+  //   }
+  //   setUserLoading(false);
+  // };
   useEffect(() => {
     if (userCredentials) {
       createUserDocument(userCredentials.user);
-
       setIsOpen!(false);
     }
   }, [userCredentials, setIsOpen]);
@@ -161,7 +171,8 @@ const Register: React.FC<RegisterProps> = () => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}>
+          _hover={{ color: "black", backgroundColor: "white" }}
+        >
           Create an account
         </Button>
       </form>
@@ -172,7 +183,8 @@ const Register: React.FC<RegisterProps> = () => {
           ml={2}
           color="red"
           cursor="pointer"
-          _hover={{ color: "white" }}>
+          _hover={{ color: "white" }}
+        >
           Login
         </Text>
       </Flex>
