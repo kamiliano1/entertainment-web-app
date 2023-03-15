@@ -33,7 +33,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
   const onSubmit: SubmitHandler<loginUserInputs> = (data) => {
     setError("");
 
-    if (firebaseError) setError("Wrong email or password");
+    // if (firebaseError?.message) setError("Wrong email or password");
 
     signInWithEmailAndPassword(data.email, data.password);
   };
@@ -86,10 +86,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
             </Text>
           )}
         </Flex>
-
-        <Text color="red" py={2}>
-          {error}
-        </Text>
+        {firebaseError?.message && (
+          <Text color="red" py={2}>
+            Wrong email or password
+          </Text>
+        )}
         <Button
           type="submit"
           background="red"
@@ -97,8 +98,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}
-        >
+          _hover={{ color: "black", backgroundColor: "white" }}>
           {"Login to your account"}
         </Button>
 
@@ -109,8 +109,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
             ml={2}
             color="red"
             cursor="pointer"
-            _hover={{ color: "white" }}
-          >
+            _hover={{ color: "white" }}>
             Sign Up
           </Text>
         </Flex>

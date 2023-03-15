@@ -26,12 +26,16 @@ type PageContextType = {
 
   movieList?: MoviesInterface[];
   setMovieList?: Dispatch<SetStateAction<MoviesInterface[]>>;
+
+  bookmarkTitle: string[];
+  setBookmarkTitle?: Dispatch<SetStateAction<string[]>>;
 };
 
 const defaultState: PageContextType = {
   isOpen: false,
   view: "login",
   searchBarValue: "",
+  bookmarkTitle: [],
 };
 
 interface Props {
@@ -46,6 +50,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [currentTab, setCurrentTab] = useState<PageNameType>("home");
 
   const [searchBarValue, setSearchBarValue] = useState("");
+  const [bookmarkTitle, setBookmarkTitle] = useState<string[]>([]);
 
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
 
@@ -56,6 +61,14 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
       setModalView("login");
     }
   };
+
+  useEffect(() => {
+    setBookmarkTitle(
+      movieList.filter((item) => item.isBookMarked).map((title) => title.title)
+    );
+    console.log(bookmarkTitle);
+    bookmarkTitle.includes;
+  }, [movieList]);
   useEffect(() => {
     if (localStorage.getItem("bookmark")) {
       setMovieList(JSON.parse(localStorage.getItem("bookmark") as string));
@@ -88,8 +101,9 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         setMovieList,
         setCurrentTab,
         currentTab,
-      }}
-    >
+        setBookmarkTitle,
+        bookmarkTitle,
+      }}>
       {children}
     </PageContext.Provider>
   );

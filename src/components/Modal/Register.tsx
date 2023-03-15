@@ -2,7 +2,7 @@ import { PageContext } from "@/src/Context";
 import { auth, firestore, storage } from "@/src/firebase/clientApp";
 import { Input, Button, Text, Flex } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import React, {
   MutableRefObject,
   useContext,
@@ -49,10 +49,8 @@ const Register: React.FC<RegisterProps> = () => {
   };
 
   const createUserDocument = async (user: User) => {
-    await addDoc(
-      collection(firestore, "users"),
-      JSON.parse(JSON.stringify(user))
-    );
+    const userDocRef = doc(firestore, "users", user.uid);
+    await setDoc(userDocRef, JSON.parse(JSON.stringify(user)));
   };
 
   const createUserBookmark = async () => {
@@ -72,6 +70,7 @@ const Register: React.FC<RegisterProps> = () => {
   useEffect(() => {
     if (userCredentials) {
       createUserDocument(userCredentials.user);
+
       setIsOpen!(false);
     }
   }, [userCredentials, setIsOpen]);
@@ -162,8 +161,7 @@ const Register: React.FC<RegisterProps> = () => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}
-        >
+          _hover={{ color: "black", backgroundColor: "white" }}>
           Create an account
         </Button>
       </form>
@@ -174,8 +172,7 @@ const Register: React.FC<RegisterProps> = () => {
           ml={2}
           color="red"
           cursor="pointer"
-          _hover={{ color: "white" }}
-        >
+          _hover={{ color: "white" }}>
           Login
         </Text>
       </Flex>
