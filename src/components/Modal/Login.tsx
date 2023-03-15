@@ -33,8 +33,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
   const onSubmit: SubmitHandler<loginUserInputs> = (data) => {
     setError("");
 
-    // if (firebaseError?.message) setError("Wrong email or password");
-
     signInWithEmailAndPassword(data.email, data.password);
   };
   return (

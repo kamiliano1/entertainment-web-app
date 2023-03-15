@@ -50,10 +50,6 @@ const Register: React.FC<RegisterProps> = () => {
   };
 
   const createUserDocument = async (user: User) => {
-    // await addDoc(
-    // collection(firestore, "users"),
-    // JSON.parse(JSON.stringify(user))
-    // JSON.parse(JSON.stringify({ ...user, avatar: "", bookmarkList: [""] }))
     const userDocRef = doc(firestore, "users", user.uid);
     await setDoc(
       userDocRef,
@@ -61,23 +57,8 @@ const Register: React.FC<RegisterProps> = () => {
         JSON.stringify({ ...user, avatar: "", bookmarkList: bookmarkTitle })
       )
     );
-    // );
   };
 
-  // const createUserBookmark = async () => {
-  //   setUserLoading(true);
-  //   try {
-  //     const postDocRef = await addDoc(
-  //       collection(firestore, "posts"),
-  //       movieList
-  //     );
-  //     const imageRef = ref(storage, `posts/${postDocRef.id}/bookmark`);
-  //     await updateDoc(postDocRef, { bookmark: imageRef });
-  //   } catch (error: any) {
-  //     console.log("handle user", error.message);
-  //   }
-  //   setUserLoading(false);
-  // };
   useEffect(() => {
     if (userCredentials) {
       createUserDocument(userCredentials.user);
