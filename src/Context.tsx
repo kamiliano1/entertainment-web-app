@@ -116,18 +116,20 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
               : { ...item, isBookMarked: false }
           )
         );
-        const bookmarkRef = doc(firestore, "users", user!.uid);
-        const bookmark = await getDoc(bookmarkRef);
+        if (user) {
+          const bookmarkRef = doc(firestore, "users", user!.uid);
+          const bookmark = await getDoc(bookmarkRef);
 
-        await setDoc(bookmarkRef, {
-          ...bookmark.data(),
-          bookmarkList: bookmarkTitle,
-        });
+          await setDoc(bookmarkRef, {
+            ...bookmark.data(),
+            bookmarkList: bookmarkTitle,
+          });
+        }
       } catch (error: any) {
         console.log("getSnippetsError", error.message);
       }
     };
-    if (user) updateUserBookmark();
+    updateUserBookmark();
     localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
   }, [bookmarkTitle, user]);
 
