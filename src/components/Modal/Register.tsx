@@ -12,6 +12,7 @@ import React, {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
 type RegisterProps = { focusRef: MutableRefObject<null> };
 
 type createUserInputs = {
@@ -36,6 +37,7 @@ const Register: React.FC<RegisterProps> = () => {
   const [userLoading, setUserLoading] = useState(false);
   const { setModalView, setIsOpen, movieList, bookmarkTitle } =
     useContext(PageContext);
+
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
     if (firebaseError) setError("A user with that email already exists");
     if (data.password.length < 6) {
@@ -152,8 +154,7 @@ const Register: React.FC<RegisterProps> = () => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}
-        >
+          _hover={{ color: "black", backgroundColor: "white" }}>
           Create an account
         </Button>
       </form>
@@ -164,8 +165,7 @@ const Register: React.FC<RegisterProps> = () => {
           ml={2}
           color="red"
           cursor="pointer"
-          _hover={{ color: "white" }}
-        >
+          _hover={{ color: "white" }}>
           Login
         </Text>
       </Flex>
