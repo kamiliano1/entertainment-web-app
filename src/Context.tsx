@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   createContext,
   Dispatch,
@@ -30,6 +30,9 @@ type PageContextType = {
 
   bookmarkTitle: string[];
   setBookmarkTitle?: Dispatch<SetStateAction<string[]>>;
+
+  avatarURL?: string;
+  setAvatarURL?: Dispatch<SetStateAction<string>>;
 };
 
 const defaultState: PageContextType = {
@@ -49,12 +52,12 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   const [modalView, setModalView] = useState<ModalViewType>("login");
 
   const [currentTab, setCurrentTab] = useState<PageNameType>("home");
-
+  const [avatarURL, setAvatarURL] = useState<string>("");
   const [searchBarValue, setSearchBarValue] = useState("");
   const [bookmarkTitle, setBookmarkTitle] = useState<string[]>([]);
-
+  const [loadingDatabase, setLoadingDataBase] = useState(false);
   const [movieList, setMovieList] = useState<MoviesInterface[]>([]);
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const openLoginModal = () => {
     if (!user) {
@@ -64,67 +67,69 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("bookmark") && !user)
-      setBookmarkTitle(JSON.parse(localStorage.getItem("bookmark") as string));
-    // console.log(bookmarkTitle, "start");
-    const getBookmark = async () => {
+    setSearchBarValue("");
+  }, [currentTab]);
+
+  useEffect(() => {
+    if (loadingDatabase === false) {
+      if (localStorage.getItem("bookmark") && !user)
+        setBookmarkTitle(
+          JSON.parse(localStorage.getItem("bookmark") as string)
+        );
+      const getUserData = async () => {
+        try {
+          const userDataRef = doc(firestore, "users", user!.uid);
+          const userData = await getDoc(userDataRef);
+          const bookmarkData = userData.data();
+
+          if (bookmarkData) {
+            setBookmarkTitle(bookmarkData.bookmarkList);
+            setAvatarURL(bookmarkData.avatar);
+          }
+        } catch (error: any) {
+          console.log("getBookmarkError", error.message);
+        }
+      };
+      if (user) getUserData();
+      fetch("data/data.json")
+        .then((res) => res.json())
+        .then((data) =>
+          setMovieList(
+            data.map((item: MoviesInterface) =>
+              bookmarkTitle.includes(item.title)
+                ? { ...item, isBookMarked: true }
+                : { ...item, isBookMarked: false }
+            )
+          )
+        );
+      setLoadingDataBase(true);
+    }
+  }, [user, bookmarkTitle, loadingDatabase]);
+
+  useEffect(() => {
+    const updateUserBookmark = async () => {
       try {
-        const bookmarkRef = doc(firestore, "users", user!.uid);
-        const bookmark = await getDoc(bookmarkRef);
-        const bookmarkData = bookmark.data();
-
-        if (bookmarkData) setBookmarkTitle(bookmarkData.bookmarkList);
-
-        // console.log("movieList", movieList);
-      } catch (error: any) {
-        console.log("getBookmarkError", error.message);
-      }
-    };
-    getBookmark();
-    fetch("data/data.json")
-      .then((res) => res.json())
-      .then((data) =>
-        setMovieList(
-          data.map((item: MoviesInterface) =>
+        setMovieList((prev) =>
+          prev.map((item) =>
             bookmarkTitle.includes(item.title)
               ? { ...item, isBookMarked: true }
               : { ...item, isBookMarked: false }
           )
-        )
-      );
-  }, []);
+        );
+        const bookmarkRef = doc(firestore, "users", user!.uid);
+        const bookmark = await getDoc(bookmarkRef);
 
-  useEffect(() => {
-    // console.log(bookmarkTitle, "przed");
-
-    setMovieList((prev) =>
-      prev.map((item) =>
-        bookmarkTitle.includes(item.title)
-          ? { ...item, isBookMarked: true }
-          : { ...item, isBookMarked: false }
-      )
-    );
-    // if (JSON.parse(localStorage.getItem("bookmark")).length !== 1)
-
-    // console.log("aktualizacja", bookmarkTitle.length);
-    // console.log(bookmarkTitle.length);
-
-    // localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
-
-    // console.log(bookmarkTitle.length);
-
-    // localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
-  }, [bookmarkTitle]);
-  // useEffect(() => {
-  //   if (bookmarkTitle.length !== 1 && !user)
-  //     localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
-  // }, [bookmarkTitle]);
-  // useEffect(() => {
-  //   // if (localStorage.getItem("bookmark"))
-  //   // console.log(JSON.parse(localStorage.getItem("bookmark"))?.length);
-  //   if (JSON.parse(localStorage.getItem("bookmark")).length !== 1)
-
-  // }, [bookmarkTitle]);
+        await setDoc(bookmarkRef, {
+          ...bookmark.data(),
+          bookmarkList: bookmarkTitle,
+        });
+      } catch (error: any) {
+        console.log("getSnippetsError", error.message);
+      }
+    };
+    if (user) updateUserBookmark();
+    localStorage.setItem("bookmark", JSON.stringify(bookmarkTitle));
+  }, [bookmarkTitle, user]);
 
   useEffect(() => {
     if (user) setModalView("userSettings");
@@ -132,9 +137,8 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const getBookmark = async () => {
+      const getUserBookmark = async () => {
         try {
-          // console.log("przed", bookmarkTitle);
           const bookmarkRef = doc(firestore, "users", user!.uid);
           const bookmark = await getDoc(bookmarkRef);
           const bookmarkData = bookmark.data();
@@ -144,7 +148,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
           console.log("getBookmarkError", error.message);
         }
       };
-      getBookmark();
+      getUserBookmark();
     }
   }, [user]);
   return (
@@ -163,7 +167,10 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         currentTab,
         setBookmarkTitle,
         bookmarkTitle,
-      }}>
+        avatarURL,
+        setAvatarURL,
+      }}
+    >
       {children}
     </PageContext.Provider>
   );

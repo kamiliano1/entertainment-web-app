@@ -44,7 +44,6 @@ export default function LoginModal() {
             {view === "register" && "Sign Up"}
             {view === "userSettings" && "Account Settings"}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
           <ModalBody fontSize=".93rem">
             {view === "login" && <Login focusRef={initialRef} />}
             {view === "register" && <Register focusRef={initialRef} />}

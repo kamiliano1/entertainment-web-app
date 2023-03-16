@@ -1,17 +1,16 @@
 import { PageContext } from "@/src/Context";
-import { auth, firestore, storage } from "@/src/firebase/clientApp";
-import { Input, Button, Text, Flex } from "@chakra-ui/react";
+import { auth, firestore } from "@/src/firebase/clientApp";
+import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import React, {
   MutableRefObject,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type RegisterProps = { focusRef: MutableRefObject<null> };
 
@@ -34,9 +33,7 @@ const Register: React.FC<RegisterProps> = () => {
     firebaseError,
   ] = useCreateUserWithEmailAndPassword(auth);
   const [error, setError] = useState("");
-  const [userLoading, setUserLoading] = useState(false);
-  const { setModalView, setIsOpen, movieList, bookmarkTitle } =
-    useContext(PageContext);
+  const { setModalView, setIsOpen, bookmarkTitle } = useContext(PageContext);
 
   const onSubmit: SubmitHandler<createUserInputs> = (data) => {
     if (firebaseError) setError("A user with that email already exists");
@@ -51,22 +48,21 @@ const Register: React.FC<RegisterProps> = () => {
     createUserWithEmailAndPassword(data.email, data.password);
   };
 
-  const createUserDocument = async (user: User) => {
-    const userDocRef = doc(firestore, "users", user.uid);
-    await setDoc(
-      userDocRef,
-      JSON.parse(
-        JSON.stringify({ ...user, avatar: "", bookmarkList: bookmarkTitle })
-      )
-    );
-  };
-
   useEffect(() => {
+    const createUserDocument = async (user: User) => {
+      const userDocRef = doc(firestore, "users", user.uid);
+      await setDoc(
+        userDocRef,
+        JSON.parse(
+          JSON.stringify({ ...user, avatar: "", bookmarkList: bookmarkTitle })
+        )
+      );
+    };
     if (userCredentials) {
       createUserDocument(userCredentials.user);
       setIsOpen!(false);
     }
-  }, [userCredentials, setIsOpen]);
+  }, [userCredentials, setIsOpen, bookmarkTitle]);
 
   return (
     <>
@@ -154,7 +150,8 @@ const Register: React.FC<RegisterProps> = () => {
           fontWeight={300}
           width={"100%"}
           py="1.5rem"
-          _hover={{ color: "black", backgroundColor: "white" }}>
+          _hover={{ color: "black", backgroundColor: "white" }}
+        >
           Create an account
         </Button>
       </form>
@@ -165,7 +162,8 @@ const Register: React.FC<RegisterProps> = () => {
           ml={2}
           color="red"
           cursor="pointer"
-          _hover={{ color: "white" }}>
+          _hover={{ color: "white" }}
+        >
           Login
         </Text>
       </Flex>

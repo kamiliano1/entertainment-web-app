@@ -13,10 +13,9 @@ import { SiWindows11 } from "react-icons/si";
 import LoginModal from "../Modal/Modal";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
-  const { isOpen, setIsOpen, currentTab, setCurrentTab, movieList } =
+  const { setIsOpen, currentTab, setCurrentTab, avatarURL } =
     useContext(PageContext);
-  const [user, loading, error] = useAuthState(auth);
-  const [userLoading, setUserLoading] = useState(false);
+  const [user] = useAuthState(auth);
   const router = useRouter();
   const currentPageAddress = router.pathname.split("/")[1] as PageNameType;
   const [isLogged, setIsLogged] = useState(false);
@@ -118,7 +117,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           <Image
             mt={{ lg: "1rem" }}
             cursor="pointer"
-            src="/assets/image-avatar.png"
+            src={avatarURL ? avatarURL : "/assets/image-avatar.png"}
             boxSize={{ base: "24px", md: "32px", lg: "40px" }}
             alt="avatar image"
             border="1px solid white"

@@ -1,7 +1,6 @@
 import { PageContext } from "@/src/Context";
-import { auth, firestore } from "@/src/firebase/clientApp";
+import { auth } from "@/src/firebase/clientApp";
 import { AspectRatio, Flex, Icon, Stack, Text } from "@chakra-ui/react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 
 import React, { useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -19,12 +18,9 @@ const MovieItem: React.FC<MoviesInterface> = ({
   year,
   category,
   rating,
-  isBookMarked,
-  isHovered,
 }) => {
-  const { setMovieList, openLoginModal, bookmarkTitle, setBookmarkTitle } =
+  const { openLoginModal, bookmarkTitle, setBookmarkTitle } =
     useContext(PageContext);
-  const [user, loading, error] = useAuthState(auth);
   const toggleBookmark = (searchTitle: string) => {
     bookmarkTitle.includes(searchTitle)
       ? setBookmarkTitle!((prev) => prev.filter((item) => item !== searchTitle))
@@ -32,25 +28,7 @@ const MovieItem: React.FC<MoviesInterface> = ({
   };
   const [isHover, setIsHover] = useState<boolean>(false);
   const backgroundOpacity = isHover ? "0.5" : "0";
-  const [loadingImage, setLoadingImage] = useState(true);
   const icon = category === "Movie" ? MdLocalMovies : GiTv;
-  const getSnippets = async (searchTitle: string) => {
-    bookmarkTitle.includes(searchTitle)
-      ? setBookmarkTitle!((prev) => prev.filter((item) => item !== searchTitle))
-      : setBookmarkTitle!((prev) => [...prev, title]);
-    try {
-      const bookmarkRef = doc(firestore, "users", user!.uid);
-      const bookmark = await getDoc(bookmarkRef);
-      const bookmarkData = bookmark.data();
-
-      await setDoc(bookmarkRef, {
-        ...bookmark.data(),
-        bookmarkList: bookmarkTitle,
-      });
-    } catch (error: any) {
-      console.log("getSnippetsError", error.message);
-    }
-  };
   return (
     <Flex
       maxWidth={{ base: "164px", md: "220px", lg: "280px" }}
@@ -58,7 +36,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
       direction="column"
       textColor="white"
       flexGrow={1}
-      flexBasis={{ base: "154px", md: "220px", lg: "280px" }}>
+      flexBasis={{ base: "154px", md: "220px", lg: "280px" }}
+    >
       <Flex
         borderRadius="8px"
         onMouseEnter={() => setIsHover(true)}
@@ -72,7 +51,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
           base: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailSmall})`,
           md: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailMedium})`,
           lg: `linear-gradient(rgba(0,0,0,${backgroundOpacity}), rgba(0,0,0,${backgroundOpacity})), url(${thumnailLarge})`,
-        }}>
+        }}
+      >
         {isHover && (
           <Flex
             alignItems="center"
@@ -80,7 +60,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             w="100%"
             h="100%"
             justifyContent="center"
-            zIndex={2}>
+            zIndex={2}
+          >
             <Flex
               cursor="pointer"
               background="rgba(255, 255, 255, .25)"
@@ -89,7 +70,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
               borderRadius="28.5px"
               alignItems="center"
               zIndex={30}
-              onClick={openLoginModal}>
+              onClick={openLoginModal}
+            >
               <Icon fontSize="22px" as={AiFillPlayCircle}></Icon>
               <Text fontSize="15px" px="1rem" fontWeight={500}>
                 Play
@@ -112,18 +94,20 @@ const MovieItem: React.FC<MoviesInterface> = ({
           opacity="50%"
           _hover={{
             opacity: "100%",
-          }}>
+          }}
+        >
           <Icon
             onMouseEnter={() => setIsHover(false)}
             onMouseLeave={() => setIsHover(true)}
-            onClick={() => getSnippets(title)}
+            onClick={() => toggleBookmark(title)}
             px=".5rem"
             as={bookmarkTitle.includes(title) ? BsFillBookmarkFill : BsBookmark}
             _hover={{
               borderRadius: "50%",
               backgroundColor: "white",
               textColor: "black",
-            }}></Icon>
+            }}
+          ></Icon>
         </AspectRatio>
       </Flex>
       <Stack justify="end">
@@ -131,7 +115,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
           as="h2"
           fontWeight={500}
           fontSize={{ base: "14px", md: "18px" }}
-          lineHeight={{ base: "18px", md: "23px" }}>
+          lineHeight={{ base: "18px", md: "23px" }}
+        >
           {title}
         </Text>
         <Flex alignItems="center" order="-1">
@@ -145,7 +130,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Icon as={icon} fontSize={{ lg: "1.3rem" }} mx=".2rem" />
           <Text as="p" opacity={0.75} fontSize={{ base: "11px", md: "13px" }}>
             {" "}
@@ -158,7 +144,8 @@ const MovieItem: React.FC<MoviesInterface> = ({
             h="3px"
             borderRadius="50%"
             opacity={0.5}
-            mx="0.5rem"></Text>
+            mx="0.5rem"
+          ></Text>
           <Text as="p" opacity={0.75} fontSize={{ base: "11px", md: "13px" }}>
             {" "}
             {rating}
@@ -169,27 +156,3 @@ const MovieItem: React.FC<MoviesInterface> = ({
   );
 };
 export default MovieItem;
-
-//  <Box bg="semiDarkBlue.1000" position="relative">
-//           <Skeleton
-//             borderRadius="8px"
-//             bg="semiDarkBlue.1000"
-//             noOfLines={4}
-//             width={{ base: "164px", md: "220px", lg: "280px" }}
-//             height={{ base: "110px", md: "140px", lg: "174px" }}
-//           />
-//           <SkeletonCircle
-//             size="9"
-//             border="10px solid white"
-//             position="absolute"
-//             top="calc(0% + .7rem)"
-//             right="calc(0% + .7rem)"
-//           />
-//           <SkeletonText
-//             mt="4"
-//             noOfLines={2}
-//             spacing="3"
-//             skeletonHeight="3"
-//             width="70%"
-//           />
-//         </Box>
