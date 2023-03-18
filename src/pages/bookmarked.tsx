@@ -84,12 +84,11 @@ export default function Home() {
         <title>Bookmark - Frontend Mentor | Entertainment web app</title>
       </Head>
       <Box
-        role="main"
         display={{ lg: "flex" }}
         mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
       >
         <Navbar />
-        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
+        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }} role="main">
           <InputElement placeholder="Search for bookmarked shows" />
           {searchBarValue ? (
             <>

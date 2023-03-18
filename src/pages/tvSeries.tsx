@@ -67,7 +67,7 @@ export default function Home() {
         mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
       >
         <Navbar />
-        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
+        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }} role="main">
           <InputElement placeholder="Search for TV series" />
           {searchBarValue ? (
             <Text

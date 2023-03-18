@@ -76,12 +76,11 @@ export default function Home() {
         <title>Home - Frontend Mentor | Entertainment web app</title>
       </Head>
       <Box
-        role="main"
         display={{ lg: "flex" }}
         mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
       >
         <Navbar />
-        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
+        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }} role="main">
           <InputElement placeholder={"Search for movies or TV series"} />
           {searchBarValue ? (
             <Text
@@ -109,6 +108,7 @@ export default function Home() {
                 Trending
               </Text>
               <Flex
+                tabIndex={0}
                 px="1rem"
                 pr={{ lg: "5rem" }}
                 width={{ lg: "calc(100vw - 1rem - 96px)" }}
