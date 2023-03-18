@@ -57,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         mt={{ lg: "2rem" }}
         mb={{ lg: "auto" }}
       >
-        <Link href="/" rel="preload">
+        <Link href="/">
           <VisuallyHidden>Home Page</VisuallyHidden>
           <Icon
             as={SiWindows11}
@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           />
         </Link>
 
-        <Link href="/movies" rel="preload">
+        <Link href="/movies">
           <VisuallyHidden>Movies</VisuallyHidden>
           <Icon
             as={MdLocalMovies}
@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           />
         </Link>
 
-        <Link href="/tvSeries" rel="preload">
+        <Link href="/tvSeries">
           <VisuallyHidden>TV series</VisuallyHidden>
           <Icon
             as={GiTv}
@@ -97,7 +97,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             }}
           />
         </Link>
-        <Link href="/bookmarked" rel="preload">
+        <Link href="/bookmarked">
           <VisuallyHidden>Bookmark</VisuallyHidden>
           <Icon
             as={BsFillBookmarkFill}
