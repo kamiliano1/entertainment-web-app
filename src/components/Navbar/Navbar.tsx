@@ -48,6 +48,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         color="red"
         fontSize={{ base: "30px", md: "38px" }}
         aria-label="Page Logo"
+        mb={{ lg: "clamp(0rem, 3vh, 2rem)" }}
       />
       <Stack
         justifyContent="center"
