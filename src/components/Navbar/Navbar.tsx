@@ -1,6 +1,6 @@
 import { PageContext, PageNameType } from "@/src/Context";
 import { auth } from "@/src/firebase/clientApp";
-import { Flex, Icon, Image, Stack } from "@chakra-ui/react";
+import { Flex, Icon, Image, Stack, VisuallyHidden } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -57,6 +57,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           mb={{ lg: "auto" }}
         >
           <Link href="/" rel="preload">
+            <VisuallyHidden>Home Page</VisuallyHidden>
             <Icon
               as={SiWindows11}
               color={`${currentTab === "home" ? "white" : "greyishBlue.1000"}`}
@@ -69,6 +70,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           </Link>
 
           <Link href="/movies" rel="preload">
+            <VisuallyHidden>Movies</VisuallyHidden>
             <Icon
               as={MdLocalMovies}
               color={`${
@@ -83,6 +85,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           </Link>
 
           <Link href="/tvSeries" rel="preload">
+            <VisuallyHidden>TV series</VisuallyHidden>
             <Icon
               as={GiTv}
               color={`${
@@ -96,6 +99,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             />
           </Link>
           <Link href="/bookmarked" rel="preload">
+            <VisuallyHidden>Bookmark</VisuallyHidden>
             <Icon
               as={BsFillBookmarkFill}
               color={`${

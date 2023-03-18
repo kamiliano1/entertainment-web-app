@@ -6,6 +6,7 @@ import { MoviesInterface } from "../components/Layout/MoviesInterface/MoviesInte
 import Navbar from "../components/Navbar/Navbar";
 import TrendingItem from "../components/Layout/Trending/TrendingItem";
 import { PageContext } from "../Context";
+import Head from "next/head";
 export default function Home() {
   const { movieList, searchBarValue } = useContext(PageContext);
   const [searchedMovie, setSearchedMovies] = useState<MoviesInterface[]>([]);
@@ -70,27 +71,18 @@ export default function Home() {
     ));
 
   return (
-    <Box
-      display={{ lg: "flex" }}
-      mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
-    >
-      <Navbar />
-      <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
-        <InputElement placeholder={"Search for movies or TV series"} />
-        {searchBarValue ? (
-          <Text
-            px="1rem"
-            pt={{ base: "24px", md: "33px", lg: "34px" }}
-            pb={{ base: "16px", md: "25px" }}
-            as="h1"
-            textColor="white"
-            fontSize={{ base: "20px", md: "32px" }}
-            lineHeight={{ base: "25.2px", md: "40.32px" }}
-          >{`Found ${searchedMovie.length} result${
-            searchedMovie.length === 1 ? "" : "s"
-          } for '${searchBarValue}' `}</Text>
-        ) : (
-          <>
+    <>
+      <Head>
+        <title>Home - Frontend Mentor | Entertainment web app</title>
+      </Head>
+      <Box
+        display={{ lg: "flex" }}
+        mb={{ base: "3.8125rem", md: "3.5rem", lg: "3rem" }}
+      >
+        <Navbar />
+        <Stack mt={{ lg: "2rem" }} ml={{ lg: "10rem" }}>
+          <InputElement placeholder={"Search for movies or TV series"} />
+          {searchBarValue ? (
             <Text
               px="1rem"
               pt={{ base: "24px", md: "33px", lg: "34px" }}
@@ -99,47 +91,61 @@ export default function Home() {
               textColor="white"
               fontSize={{ base: "20px", md: "32px" }}
               lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
-              Trending
-            </Text>
-            <Flex
-              px="1rem"
-              pr={{ lg: "5rem" }}
-              width={{ lg: "calc(100vw - 1rem - 96px)" }}
-              overflowX="auto"
-              gap={{ base: "16px", md: "40px" }}
-            >
-              {trendingsItems}
-            </Flex>
+            >{`Found ${searchedMovie.length} result${
+              searchedMovie.length === 1 ? "" : "s"
+            } for '${searchBarValue}' `}</Text>
+          ) : (
+            <>
+              <Text
+                px="1rem"
+                pt={{ base: "24px", md: "33px", lg: "34px" }}
+                pb={{ base: "16px", md: "25px" }}
+                as="h1"
+                textColor="white"
+                fontSize={{ base: "20px", md: "32px" }}
+                lineHeight={{ base: "25.2px", md: "40.32px" }}
+              >
+                Trending
+              </Text>
+              <Flex
+                px="1rem"
+                pr={{ lg: "5rem" }}
+                width={{ lg: "calc(100vw - 1rem - 96px)" }}
+                overflowX="auto"
+                gap={{ base: "16px", md: "40px" }}
+              >
+                {trendingsItems}
+              </Flex>
 
-            <Text
-              px="1rem"
-              pt={{ base: "24px", md: "39px", lg: "40px" }}
-              // py="24px"
-              pb={{ base: "24px", lg: "32px" }}
-              as="h2"
-              textColor="white"
-              fontSize={{ base: "20px", md: "32px" }}
-              lineHeight={{ base: "25.2px", md: "40.32px" }}
-            >
-              Recommended for you
-            </Text>
-          </>
-        )}
-        <Flex
-          px="1rem"
-          flexWrap="wrap"
-          gap={{
-            base: ".9375rem 1rem",
-            md: "1.875rem 1.5rem",
-            lg: "2.5rem 2rem",
-          }}
-          w={{ lg: "90vw" }}
-          maxWidth="2600px"
-        >
-          {searchBarValue ? searchItems : recommendedItems}
-        </Flex>
-      </Stack>
-    </Box>
+              <Text
+                px="1rem"
+                pt={{ base: "24px", md: "39px", lg: "40px" }}
+                // py="24px"
+                pb={{ base: "24px", lg: "32px" }}
+                as="h2"
+                textColor="white"
+                fontSize={{ base: "20px", md: "32px" }}
+                lineHeight={{ base: "25.2px", md: "40.32px" }}
+              >
+                Recommended for you
+              </Text>
+            </>
+          )}
+          <Flex
+            px="1rem"
+            flexWrap="wrap"
+            gap={{
+              base: ".9375rem 1rem",
+              md: "1.875rem 1.5rem",
+              lg: "2.5rem 2rem",
+            }}
+            w={{ lg: "90vw" }}
+            maxWidth="2600px"
+          >
+            {searchBarValue ? searchItems : recommendedItems}
+          </Flex>
+        </Stack>
+      </Box>
+    </>
   );
 }
