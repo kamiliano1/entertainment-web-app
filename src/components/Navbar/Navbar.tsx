@@ -31,6 +31,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <>
       <Flex
+        role="navigation"
         backgroundColor="semiDarkBlue.1000"
         p={{ base: "1rem", md: "1.5rem 1.5rem 1.19rem 1.4rem" }}
         m={{ base: "0", md: "1.4rem", lg: "2rem" }}
