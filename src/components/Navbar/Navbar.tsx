@@ -56,20 +56,19 @@ const Navbar: React.FC<NavbarProps> = () => {
           mt={{ lg: "2rem" }}
           mb={{ lg: "auto" }}
         >
-          <Link href="/">
+          <Link href="/" rel="preload">
             <Icon
               as={SiWindows11}
               color={`${currentTab === "home" ? "white" : "greyishBlue.1000"}`}
               fontSize={{ base: "16px", md: "20px" }}
               _hover={{ color: "red" }}
-              name="home"
               onClick={() => {
                 if (setCurrentTab) setCurrentTab("home");
               }}
             />
           </Link>
 
-          <Link href="/movies">
+          <Link href="/movies" rel="preload">
             <Icon
               as={MdLocalMovies}
               color={`${
@@ -77,14 +76,13 @@ const Navbar: React.FC<NavbarProps> = () => {
               }`}
               fontSize={{ base: "24px", md: "28px" }}
               _hover={{ color: "red" }}
-              name="movies"
               onClick={() => {
                 if (setCurrentTab) setCurrentTab("movies");
               }}
             />
           </Link>
 
-          <Link href="/tvSeries">
+          <Link href="/tvSeries" rel="preload">
             <Icon
               as={GiTv}
               color={`${
@@ -92,13 +90,12 @@ const Navbar: React.FC<NavbarProps> = () => {
               }`}
               fontSize={{ base: "20px", md: "25px" }}
               _hover={{ color: "red" }}
-              name="tvSeries"
               onClick={() => {
                 if (setCurrentTab) setCurrentTab("tvSeries");
               }}
             />
           </Link>
-          <Link href="/bookmarked">
+          <Link href="/bookmarked" rel="preload">
             <Icon
               as={BsFillBookmarkFill}
               color={`${
@@ -106,7 +103,6 @@ const Navbar: React.FC<NavbarProps> = () => {
               }`}
               fontSize={{ base: "18px", md: "20px" }}
               _hover={{ color: "red" }}
-              name="bookmarked"
               onClick={() => {
                 if (setCurrentTab) setCurrentTab("bookmarked");
               }}
