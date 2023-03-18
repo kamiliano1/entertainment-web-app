@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { MoviesInterface } from "./components/MoviesInterface/MoviesInterface";
+import { MoviesInterface } from "./components/Layout/MoviesInterface/MoviesInterface";
 import { auth, firestore } from "./firebase/clientApp";
 type ModalViewType = "login" | "register" | "userSettings";
 export type PageNameType = "home" | "movies" | "tvSeries" | "bookmarked";

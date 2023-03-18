@@ -1,9 +1,6 @@
 import { PageContext } from "@/src/Context";
-import { auth, firestore } from "@/src/firebase/clientApp";
 import { AspectRatio, Flex, Icon, Stack, Text } from "@chakra-ui/react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { GiTv } from "react-icons/gi";

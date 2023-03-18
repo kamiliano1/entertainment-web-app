@@ -1,10 +1,10 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import InputElement from "../components/Layout/InputElement";
-import MovieItem from "../components/Movie/MovieItem";
-import { MoviesInterface } from "../components/MoviesInterface/MoviesInterface";
+import MovieItem from "../components/Layout/Movie/MovieItem";
+import { MoviesInterface } from "../components/Layout/MoviesInterface/MoviesInterface";
 import Navbar from "../components/Navbar/Navbar";
-import TrendingItem from "../components/Trending/TrendingItem";
+import TrendingItem from "../components/Layout/Trending/TrendingItem";
 import { PageContext } from "../Context";
 export default function Home() {
   const { movieList, searchBarValue } = useContext(PageContext);

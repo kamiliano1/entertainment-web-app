@@ -1,21 +1,12 @@
 import { PageContext } from "@/src/Context";
 import { auth, firestore, storage } from "@/src/firebase/clientApp";
-import { Box, Button, Image, Stack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import React, {
-  MutableRefObject,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  useAuthState,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { MutableRefObject, useContext, useRef, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import AvatarUpload from "./AvatarUpload";
 type LoginModalProps = { focusRef: MutableRefObject<null> };
 
 const UserSettings: React.FC<LoginModalProps> = ({ focusRef }) => {
@@ -27,7 +18,7 @@ const UserSettings: React.FC<LoginModalProps> = ({ focusRef }) => {
 
   const { setModalView, setIsOpen, setBookmarkTitle, setAvatarURL } =
     useContext(PageContext);
-  const [user, userLoading, userError] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [selectFile, setSelectFile] = useState<string>("");
   const [imageLoading, setImageLoading] = useState<boolean>(false);
   const [bookmarkButtonLoading, setBookmarkButtonLoading] = useState(false);
@@ -102,76 +93,14 @@ const UserSettings: React.FC<LoginModalProps> = ({ focusRef }) => {
       >
         {"Clear Bookmark"}
       </Button>
-      <Button
-        onClick={() => selectFileRef.current?.click()}
-        type="submit"
-        background="red"
-        isLoading={bookmarkButtonLoading}
-        fontWeight={300}
-        width={"100%"}
-        py="1.5rem"
-        _hover={{ color: "black", backgroundColor: "white" }}
-      >
-        {"Upload Avatar"}
-      </Button>
-      <input ref={selectFileRef} type="file" hidden onChange={onSelectImage} />
-      {selectFile && (
-        <Box
-          alignItems="center"
-          p="1rem"
-          pt={{ lg: "1rem" }}
-          display="flex"
-          top={0}
-          width="calc(100% - 3rem)"
-          height="calc(100% - 3rem)"
-          position="absolute"
-          backgroundColor="darkBlue.1000"
-          zIndex={30}
-          borderRadius="5px"
-        >
-          <Image
-            src={selectFile}
-            maxWidth="150px"
-            maxHeight="150px"
-            alt="avatar image"
-            border="1px solid white"
-            mr="1rem"
-          />
-          <Stack spacing="1rem" width="100%">
-            <Button
-              onClick={imageUpload}
-              background="red"
-              isLoading={imageLoading}
-              fontWeight={300}
-              width={"100%"}
-              py="1.5rem"
-              _hover={{ color: "black", backgroundColor: "white" }}
-            >
-              {"Accept"}
-            </Button>
-            <Button
-              onClick={() => selectFileRef.current?.click()}
-              background="red"
-              fontWeight={300}
-              width={"100%"}
-              py="1.5rem"
-              _hover={{ color: "black", backgroundColor: "white" }}
-            >
-              {"Change"}
-            </Button>
-            <Button
-              onClick={() => setSelectFile("")}
-              background="red"
-              fontWeight={300}
-              width={"100%"}
-              py="1.5rem"
-              _hover={{ color: "black", backgroundColor: "white" }}
-            >
-              {"Cancel"}
-            </Button>
-          </Stack>
-        </Box>
-      )}
+      <AvatarUpload
+        selectFileRef={selectFileRef}
+        selectFile={selectFile}
+        setSelectFile={setSelectFile}
+        onSelectImage={onSelectImage}
+        imageUpload={imageUpload}
+        imageLoading={imageLoading}
+      />
       <Button
         onClick={logout}
         type="submit"

@@ -1,8 +1,8 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import InputElement from "../components/Layout/InputElement";
-import MovieItem from "../components/Movie/MovieItem";
-import { MoviesInterface } from "../components/MoviesInterface/MoviesInterface";
+import MovieItem from "../components/Layout/Movie/MovieItem";
+import { MoviesInterface } from "../components/Layout/MoviesInterface/MoviesInterface";
 import Navbar from "../components/Navbar/Navbar";
 import { PageContext } from "../Context";
 export default function Home() {
