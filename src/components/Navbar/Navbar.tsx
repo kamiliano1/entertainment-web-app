@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           cursor="pointer"
           src={avatarURL ? avatarURL : "/assets/image-avatar.png"}
           boxSize={{ base: "24px", md: "32px", lg: "40px" }}
-          alt="avatar image"
+          alt="Avatar image"
           border="1px solid white"
           borderRadius="50%"
           onClick={() => setIsOpen!((prev) => !prev)}
@@ -132,6 +132,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           mt={{ lg: "1rem" }}
           _hover={{ color: "red" }}
           onClick={() => setIsOpen!((prev) => !prev)}
+          aria-label="Avatar Icon"
         />
       )}
     </Flex>
