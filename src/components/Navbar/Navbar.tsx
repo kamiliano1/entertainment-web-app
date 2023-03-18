@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         as={MdMovie}
         color="red"
         fontSize={{ base: "30px", md: "38px" }}
-        role="logo"
+        title="logo"
       />
       <Stack
         justifyContent="center"
