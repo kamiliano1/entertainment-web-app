@@ -34,15 +34,15 @@ Users should be able to:
 
 ## Desktop
 
-![](./Desktop.jpg)
+![](./Desktop.png)
 
 ## Tablet
 
-![](./Tablet.jpg)
+![](./Tablet.png)
 
 ## Mobile
 
-![](./Mobile.jpg)
+![](./Mobile.png)
 
 ### Links
 
