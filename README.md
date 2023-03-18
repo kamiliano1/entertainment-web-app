@@ -1,38 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Mentor - Entertainment web app solution
 
-## Getting Started
+This is a solution to the [Entertainment web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X). Frontend Mentor challenges help you improve your coding skills by building realistic project.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### The challenge
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Users should be able to:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Navigate between Home, Movies, TV Series, and Bookmarked Shows pages
+- Add/Remove bookmarks from all movies and TV series
+- Search for relevant shows on all pages
+- **Bonus**: Build this project as a full-stack application
+- **Bonus**: If you're building a full-stack app, we provide authentication screen (sign-up/login) designs if you'd like to create an auth flow
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Screenshot
 
-## Learn More
+## Desktop
 
-To learn more about Next.js, take a look at the following resources:
+![](./Desktop.jpg)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tablet
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![](./Tablet.jpg)
 
-## Deploy on Vercel
+## Mobile
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![](./Mobile.jpg)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Links
+
+- Solution URL: [https://github.com/kamiliano1/entertainment-web-app](https://github.com/kamiliano1/entertainment-web-app)
+- Live Site URL: [https://entertainment-web-app-kwtj-mzp6x2u7s-kamiliano1.vercel.app/](https://entertainment-web-app-kwtj-mzp6x2u7s-kamiliano1.vercel.app/)
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- Mobile-first workflow
+- localStorage - for keeping bookmarked movies or TV series
+- React useContext
+- [React](https://reactjs.org/) - JS library
+- [react-icons](https://react-icons.github.io/react-icons/) - React Icons
+- [Next.js](https://nextjs.org/) - React framework
+- [Chakra UI](https://chakra-ui.com/)
+- [Styled Components](https://styled-components.com/)
+- [Firebase](https://firebase.google.com/) - for sign up and log in
+- [React Hook Form](https://react-hook-form.com/) - For input form
+
+### What I learned
+
+During this challenge first time, I was working with Firebase and Chakra UI.
+When I was building the project I got knowledge of how to use Chakra UI.
+
+I had a problem with importing provided SVG icons with Chakra UI and because of that, I used icons from react-icons.
+
+### Useful resources
+
+- [Code a Reddit Clone with React, Next.js, Firebase v9, Chakra UI – Full Course](https://www.youtube.com/watch?v=rCm5RVYKWVg&t=28649s) - This course helped me with Chakra UI but mostly with how to implement Firebase to this project.
+
+## Author
+
+- Website - [Kamil Szymon](https://github.com/kamiliano1)
+- Frontend Mentor - [@kamiliano1](https://www.frontendmentor.io/profile/kamiliano1)
+
+## Acknowledgments
+
+As I mentioned before I want to thank you for the Reddit clone course. It was much helpful when I was working on this project. It showed step-by-step how to start working with firebase and how to use it.
