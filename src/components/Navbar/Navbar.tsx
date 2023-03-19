@@ -28,6 +28,8 @@ const Navbar: React.FC<NavbarProps> = () => {
       setCurrentTab(currentPageAddress ? currentPageAddress : "home");
   }, [router, setCurrentTab, currentPageAddress]);
 
+  // console.log(avatarURL);
+  useEffect(() => {}, [avatarURL]);
   return (
     <Flex
       role="navigation"
