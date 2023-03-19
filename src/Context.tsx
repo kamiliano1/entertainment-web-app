@@ -85,6 +85,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
           if (bookmarkData) {
             setBookmarkTitle(bookmarkData.bookmarkList);
             setAvatarURL(bookmarkData.avatar);
+            console.log("bookmarkData.avatar", bookmarkData.avatar);
           }
         } catch (error: any) {
           console.log("getBookmarkError", error.message);
@@ -104,7 +105,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
         );
       setLoadingDataBase(true);
     }
-  }, [user, bookmarkTitle, loadingDatabase]);
+  }, [user, bookmarkTitle, loadingDatabase, currentTab]);
 
   useEffect(() => {
     fetch("data/data.json")
