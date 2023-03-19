@@ -29,7 +29,9 @@ const Navbar: React.FC<NavbarProps> = () => {
   }, [router, setCurrentTab, currentPageAddress]);
 
   // console.log(avatarURL);
-  useEffect(() => {}, [avatarURL]);
+  useEffect(() => {
+    console.log(avatarURL);
+  }, [avatarURL]);
   return (
     <Flex
       role="navigation"
