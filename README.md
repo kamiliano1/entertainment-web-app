@@ -63,7 +63,6 @@ Users should be able to:
 - [react-icons](https://react-icons.github.io/react-icons/) - React Icons
 - [Next.js](https://nextjs.org/) - React framework
 - [Chakra UI](https://chakra-ui.com/)
-- [Styled Components](https://styled-components.com/)
 - [Firebase](https://firebase.google.com/) - for sign up and log in
 - [React Hook Form](https://react-hook-form.com/) - For input form
 
