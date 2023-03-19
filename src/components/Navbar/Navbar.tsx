@@ -136,6 +136,16 @@ const Navbar: React.FC<NavbarProps> = () => {
           aria-label="Avatar Icon"
         />
       )}
+      <Image
+        mt={{ lg: "1rem" }}
+        cursor="pointer"
+        src={avatarURL}
+        boxSize={{ base: "24px", md: "32px", lg: "40px" }}
+        alt="Avatar image"
+        border="1px solid white"
+        borderRadius="50%"
+        onClick={() => setIsOpen!((prev) => !prev)}
+      />
     </Flex>
   );
 };
