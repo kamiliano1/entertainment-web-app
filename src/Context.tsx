@@ -118,7 +118,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
           )
         )
       );
-  }, [bookmarkTitle, movieList]);
+  }, [bookmarkTitle]);
 
   useEffect(() => {
     const updateUserBookmark = async () => {
