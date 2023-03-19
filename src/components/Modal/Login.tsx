@@ -25,7 +25,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ focusRef }) => {
   } = useForm<loginUserInputs>();
   const [signInWithEmailAndPassword, userName, loading, firebaseError] =
     useSignInWithEmailAndPassword(auth);
-  const { setModalView, setIsOpen, isOpen } = useContext(PageContext);
+  const { setModalView, setIsOpen } = useContext(PageContext);
 
   useEffect(() => {
     if (userName) setIsOpen!(false);

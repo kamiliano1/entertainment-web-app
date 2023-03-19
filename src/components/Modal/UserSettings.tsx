@@ -9,11 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import AvatarUpload from "./AvatarUpload";
 type LoginModalProps = { focusRef: MutableRefObject<null> };
 
-const UserSettings: React.FC<LoginModalProps> = ({ focusRef }) => {
-  type loginUserInputs = {
-    email: string;
-    password: string;
-  };
+const UserSettings: React.FC<LoginModalProps> = () => {
   const selectFileRef = useRef<HTMLInputElement>(null);
 
   const { setModalView, setIsOpen, setBookmarkTitle, setAvatarURL } =
@@ -60,6 +56,7 @@ const UserSettings: React.FC<LoginModalProps> = ({ focusRef }) => {
     await signOut(auth);
     setIsOpen!(false);
     setModalView!("login");
+    setAvatarURL!("");
   };
 
   const clearBookmark = async () => {
