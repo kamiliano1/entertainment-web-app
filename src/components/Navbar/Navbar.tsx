@@ -1,7 +1,6 @@
 import { PageContext, PageNameType } from "@/src/Context";
-import { auth, firestore } from "@/src/firebase/clientApp";
+import { auth } from "@/src/firebase/clientApp";
 import { Flex, Icon, Image, Stack, VisuallyHidden } from "@chakra-ui/react";
-import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -14,44 +13,13 @@ import { SiWindows11 } from "react-icons/si";
 import LoginModal from "../Modal/Modal";
 type NavbarProps = {};
 const Navbar: React.FC<NavbarProps> = () => {
-  const {
-    setIsOpen,
-    currentTab,
-    setCurrentTab,
-    avatarURL,
-    setBookmarkTitle,
-    setAvatarURL,
-  } = useContext(PageContext);
+  const { setIsOpen, currentTab, setCurrentTab, avatarURL } =
+    useContext(PageContext);
   const [user] = useAuthState(auth);
   const router = useRouter();
   const currentPageAddress = router.pathname.split("/")[1] as PageNameType;
   const [isLogged, setIsLogged] = useState(false);
-  const [loadingDatabase, setLoadingDataBase] = useState(false);
 
-  useEffect(() => {
-    const getUserData = async () => {
-      if (loadingDatabase === false) {
-        try {
-          const userDataRef = doc(firestore, "users", user!.uid);
-          const userData = await getDoc(userDataRef);
-          const bookmarkData = userData.data();
-
-          if (bookmarkData) {
-            setBookmarkTitle!(bookmarkData.bookmarkList);
-            setAvatarURL!(bookmarkData.avatar);
-            console.log("bookmarkData.avatar", bookmarkData.avatar);
-          }
-        } catch (error: any) {
-          console.log("getBookmarkError", error.message);
-        }
-      }
-      setLoadingDataBase(true);
-    };
-    if (user && !loadingDatabase) getUserData();
-    setLoadingDataBase(true);
-  }, [loadingDatabase, setAvatarURL, user, setBookmarkTitle]);
-
-  // if (user) getUserData();
   useEffect(() => {
     user ? setIsLogged(true) : setIsLogged(false);
   }, [user]);
@@ -168,16 +136,6 @@ const Navbar: React.FC<NavbarProps> = () => {
           aria-label="Avatar Icon"
         />
       )}
-      <Image
-        mt={{ lg: "1rem" }}
-        cursor="pointer"
-        src={avatarURL}
-        boxSize={{ base: "24px", md: "32px", lg: "40px" }}
-        alt="Avatar image"
-        border="1px solid white"
-        borderRadius="50%"
-        onClick={() => setIsOpen!((prev) => !prev)}
-      />
     </Flex>
   );
 };

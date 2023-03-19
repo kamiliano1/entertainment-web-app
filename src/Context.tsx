@@ -85,7 +85,6 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
           if (bookmarkData) {
             setBookmarkTitle(bookmarkData.bookmarkList);
             setAvatarURL(bookmarkData.avatar);
-            console.log("bookmarkData.avatar", bookmarkData.avatar);
           }
         } catch (error: any) {
           console.log("getBookmarkError", error.message);
