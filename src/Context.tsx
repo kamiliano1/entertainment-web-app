@@ -107,6 +107,20 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
   }, [user, bookmarkTitle, loadingDatabase]);
 
   useEffect(() => {
+    fetch("data/data.json")
+      .then((res) => res.json())
+      .then((data) =>
+        setMovieList(
+          data.map((item: MoviesInterface) =>
+            bookmarkTitle.includes(item.title)
+              ? { ...item, isBookMarked: true }
+              : { ...item, isBookMarked: false }
+          )
+        )
+      );
+  }, [bookmarkTitle, movieList]);
+
+  useEffect(() => {
     const updateUserBookmark = async () => {
       try {
         setMovieList((prev) =>
@@ -126,7 +140,7 @@ const PageContextProvider: React.FC<Props> = ({ children }) => {
           });
         }
       } catch (error: any) {
-        console.log("getSnippetsError", error.message);
+        console.log("updateUserBookmark", error.message);
       }
     };
     updateUserBookmark();
